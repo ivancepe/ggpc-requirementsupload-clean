@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HR Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    #dashboardTable {
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center pt-4 px-2">
+  <!-- Logo Area -->
+  <div class="w-full flex flex-col items-center mt-2 mb-2">
+    <img src="/images/ggpc-logo.png" alt="Company Logo" class="h-16 w-auto mb-2">
+    <!-- You can adjust the src and class as needed -->
+  </div>
+  <div class="w-full max-w-5xl bg-white p-2 sm:p-4 md:p-8 rounded-lg shadow-lg mt-2 mx-auto">
+    <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">HR Dashboard: Applicant Uploads</h2>
+    <div class="mb-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+      <input id="searchEmail" type="text" placeholder="Search by name..." class="border px-3 py-2 rounded w-full sm:w-64">
+      <button id="searchBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold w-full sm:w-auto">Search</button>
+      <button id="resetBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded font-semibold w-full sm:w-auto">Reset</button>
+    </div>
+    <!-- Responsive scroll for table -->
+    <div id="dashboardTable" class="overflow-x-auto w-full max-w-[95vw] sm:max-w-full">
+      <!-- Table will be injected here -->
+    </div>
+  </div>
+  <script>
+    let allApplicants = [];
+    let requiredFiles = [];
+
+    async function loadDashboard() {
+      const res = await fetch('/.netlify/functions/dashboard');
+      const data = await res.json();
+      allApplicants = data.applicants;
+      requiredFiles = data.requiredFiles;
+      renderTable(allApplicants); // Show all by default
+    }
+
+    function renderTable(applicants) {
+      let html = '<table class="min-w-max text-xs md:text-sm whitespace-nowrap"><thead><tr><th class="px-2 sm:px-4 py-2 border">Applicant</th>';
+      requiredFiles.forEach(f => {
+        html += `<th class="px-2 sm:px-4 py-2 border">${f}</th>`;
+      });
+      html += '</tr></thead><tbody>';
+      applicants.forEach(app => {
+        html += `<tr><td class="border px-2 sm:px-4 py-2 font-semibold">${app.name}</td>`;
+        requiredFiles.forEach(f => {
+          html += `<td class="border px-2 sm:px-4 py-2 text-center">${app.uploaded.includes(f) ? '✅' : '❌'}</td>`;
+        });
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('dashboardTable').innerHTML = html;
+    }
+
+    document.getElementById('searchBtn').onclick = function() {
+      const val = document.getElementById('searchEmail').value.trim().toLowerCase();
+      if (!val) {
+        renderTable(allApplicants);
+        return;
+      }
+      const filtered = allApplicants.filter(app => (app.name || '').toLowerCase().includes(val));
+      renderTable(filtered);
+    };
+
+    document.getElementById('resetBtn').onclick = function() {
+      document.getElementById('searchEmail').value = '';
+      renderTable(allApplicants);
+    };
+
+    loadDashboard();
+  </script>
+</body>
+</html>

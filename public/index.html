@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Requirements Upload Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+  <!-- Logo section -->
+  <div class="w-full flex flex-col items-center mt-8 mb-2">
+    <img src="/images/ggpc-logo.png" alt="Company Logo" class="h-20 w-auto mb-2">
+    <h2 class="text-xl font-bold text-left text-gray-800">GGPC Requirements Upload Page</h2>
+  </div>
+  <div class="w-full max-w-3xl bg-white p-8 rounded-lg shadow-lg mt-2">
+    <h2 class="text-2xl font-bold mb-4 text-left text-gray-800">Instructions</h2>
+    <p>
+      <ul class="list-disc pl-5 text-gray-700">
+        <li>All Requirements must be uploaded in <strong>PDF Format.</strong></li>
+        <li>Please ensure to upload each requirements in it's corresponding upload field</li>
+        <li>If more than one child, put all children Birth Certificate in a single pdf file.</li>
+        <li>Make sure to rename your files exactly as listed in the File Naming Guide below before uploading.</li>
+    </p>
+    <!-- Add this above your form, inside your main card -->
+    <div class="mb-4 mt-4">
+      <button
+        type="button"
+        id="toggleRenameCard"
+        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-semibold focus:outline-none"
+      >
+        Show File Naming Guide
+      </button>
+      <div id="renameCard" class="bg-gray-50 border border-gray-300 rounded-lg p-4 mt-2 shadow hidden">
+        <h3 class="text-lg font-bold mb-2 text-gray-800">File Naming Guide</h3>
+        <p class="mb-2 text-gray-700">Rename your file exactly like listed below before uploading:</p>
+        <ul class="list-disc pl-5 text-gray-700">
+          <li>Resume.pdf</li>
+          <li>Birth Certificate.pdf</li>
+          <li>Marriage Contract.pdf</li>
+          <li>Children-BC.pdf</li>
+          <li>TOR-Diploma.pdf</li>
+          <li>BIR2316.pdf</li>
+          <li>COE.pdf</li>
+          <li>Barangay.pdf</li>
+          <li>Police.pdf</li>
+          <li>NBI.pdf</li>
+          <li>SSS.pdf</li>
+          <li>E1E4.pdf</li>
+          <li>Philhealth.pdf</li>
+          <li>Pagibig.pdf</li>
+          <li>TIN.pdf</li>
+        </ul>
+      </div>
+    </div>
+    <form class="mt-4" id="uploadForm" enctype="multipart/form-data">
+      <input type="text" name="fullname" placeholder="Full Name" required class="mb-2 px-4 py-2 border rounded w-full">
+      <input type="email" name="email" placeholder="Email" required class="mb-2 px-4 py-2 border rounded w-full">
+      <label class="block font-medium mb-1">Resume:</label>
+      <input type="file" name="resume" required class="mb-2 block w-full text-sm text-gray-700">
+
+      <label class="block font-medium mb-1">NSO / PSA Birth Certificate:</label>
+      <input type="file" name="birth_certificate" required class="mb-2 block w-full text-sm text-gray-700">
+
+      <!-- Marriage Contract: remove required, since it has a checkbox -->
+      <label class="block font-medium mb-1">NSO / PSA Authenticated Marriage Contract:</label>
+      <div class="flex items-center mb-4">
+        <input type="file" name="marriage_contract" id="marriage_contract" class="block w-full text-sm text-gray-700" />
+        <label class="ml-4 flex items-center whitespace-nowrap">
+          <input type="checkbox" name="marital_status" id="not_married" value="not_married" class="mr-2">
+          Not Married
+        </label>
+      </div>
+
+      <!-- Children Birth Certificates: remove required, since it has a checkbox -->
+      <label class="block font-medium mb-1">Children Birth Certificates:</label>
+      <div class="flex items-center mb-4">
+        <input type="file" name="children_birth_certificates" id="children_birth_certificates" class="block w-full text-sm text-gray-700" multiple />
+        <label class="ml-4 flex items-center">
+          <input type="checkbox" name="children_none" id="children_none" value="none" class="mr-2">
+          None
+        </label>
+      </div>
+
+      <!-- For all other fields without checkboxes, add required -->
+      <label class="block font-medium mb-1">Transcript of Record / Diploma:</label>
+      <div class="flex items-center mb-4">
+        <input type="file" name="transcript_diploma" id="transcript_diploma" class="block w-full text-sm text-gray-700" />
+        <label class="ml-4 flex items-center whitespace-nowrap">
+          <input type="checkbox" name="transcript_to_follow" id="transcript_to_follow" value="to_follow" class="mr-2">
+          To Follow
+        </label>
+      </div>
+      <label class="block font-medium mb-1">BIR Form 2316:</label>
+      <div class="flex items-center mb-4">
+        <input type="file" name="bir_2316" id="bir_2316" class="block w-full text-sm text-gray-700" />
+        <label class="ml-4 flex items-center whitespace-nowrap">
+          <input type="checkbox" name="bir_to_follow" id="bir_to_follow" value="to_follow" class="mr-2">
+          To Follow
+        </label>
+      </div>
+      <label class="block font-medium mb-1">Certificate of Employment/Clearance (from previous employer):</label>
+      <div class="flex items-center mb-4">
+        <input type="file" name="coe_clearance" id="coe_clearance" class="block w-full text-sm text-gray-700" />
+        <label class="ml-4 flex items-center whitespace-nowrap">
+          <input type="checkbox" name="coe_to_follow" id="coe_to_follow" value="to_follow" class="mr-2">
+          To Follow
+        </label>
+      </div>
+      <label class="block font-medium mb-1">Barangay Clearance:</label>
+      <div class="flex items-center mb-4">
+        <input type="file" name="barangay_clearance" id="barangay_clearance" class="block w-full text-sm text-gray-700" />
+        <label class="ml-4 flex items-center whitespace-nowrap">
+          <input type="checkbox" name="barangay_to_follow" id="barangay_to_follow" value="to_follow" class="mr-2">
+          To Follow
+        </label>
+      </div>
+
+      <label class="block font-medium mb-1">Police Clearance:</label>
+      <div class="flex items-center mb-4">
+        <input type="file" name="police_clearance" id="police_clearance" class="block w-full text-sm text-gray-700" />
+        <label class="ml-4 flex items-center whitespace-nowrap">
+          <input type="checkbox" name="police_to_follow" id="police_to_follow" value="to_follow" class="mr-2">
+          To Follow
+        </label>
+      </div>
+
+      <label class="block font-medium mb-1">NBI Clearance:</label>
+      <div class="flex items-center mb-4">
+        <input type="file" name="nbi_clearance" id="nbi_clearance" class="block w-full text-sm text-gray-700" />
+        <label class="ml-4 flex items-center whitespace-nowrap">
+          <input type="checkbox" name="nbi_to_follow" id="nbi_to_follow" value="to_follow" class="mr-2">
+          To Follow
+        </label>
+      </div>
+
+      <label class="block font-medium mb-1">SSS Number:</label>
+      <input type="file" name="sss_number" id="sss_number" required class="mb-2 block w-full text-sm text-gray-700">
+
+      <label class="block font-medium mb-1">E1 / E4 Form (ESI):</label>
+      <input type="file" name="e1_e4_form" id="e1_e4_form" required class="mb-2 block w-full text-sm text-gray-700">
+
+      <label class="block font-medium mb-1">Philhealth ID / MDR:</label>
+      <input type="file" name="philhealth_id" id="philhealth_id" required class="mb-2 block w-full text-sm text-gray-700">
+
+      <label class="block font-medium mb-1">Pag-ibig ID / MDF:</label>
+      <input type="file" name="pagibig_id" id="pagibig_id" required class="mb-2 block w-full text-sm text-gray-700">
+
+      <label class="block font-medium mb-1">TIN:</label>
+      <input type="file" name="tin" id="tin" required class="mb-2 block w-full text-sm text-gray-700">
+      <button id="uploadBtn" type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-2 rounded shadow w-full">
+        <span id="uploadBtnText">Upload Files</span>
+      </button>
+    </form>
+    <div id="successMsg" class="hidden text-green-600 mt-4">Upload Successful!</div>
+  </div>
+
+  <!-- Success Modal -->
+  <div id="successModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full text-center">
+      <h3 class="text-xl font-bold mb-4 text-green-600">Upload Successful!</h3>
+      <p class="mb-6">Your files have been uploaded successfully.</p>
+      <button id="closeModalBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold">Close</button>
+    </div>
+  </div>
+  
+  <script>
+  const uploadForm = document.getElementById('uploadForm');
+  const uploadBtn = document.getElementById('uploadBtn');
+  const uploadBtnText = document.getElementById('uploadBtnText');
+  const successModal = document.getElementById('successModal');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+
+  uploadForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    uploadBtn.disabled = true;
+    uploadBtnText.textContent = "Uploading...";
+    const formData = new FormData(uploadForm);
+    try {
+      const response = await fetch('/.netlify/functions/upload', {
+        method: 'POST',
+        body: formData
+      });
+      if (response.ok) {
+        successModal.classList.remove('hidden');
+        uploadForm.reset();
+      } else {
+        alert('Upload failed.');
+      }
+    } catch (err) {
+      alert('An error occurred: ' + err);
+    } finally {
+      uploadBtn.disabled = false;
+      uploadBtnText.textContent = "Upload Files";
+    }
+  });
+
+  closeModalBtn.addEventListener('click', function() {
+    successModal.classList.add('hidden');
+  });
+
+  // Toggle the rename card
+  document.getElementById('toggleRenameCard').addEventListener('click', function() {
+    const card = document.getElementById('renameCard');
+    card.classList.toggle('hidden');
+    this.textContent = card.classList.contains('hidden') ? 'Show File Naming Guide' : 'Hide File Naming Guide';
+  });
+
+  // Helper to handle "To Follow" logic for file + checkbox pairs
+  function setupToFollowToggle(fileInputId, checkboxId) {
+    const fileInput = document.getElementById(fileInputId);
+    const checkbox = document.getElementById(checkboxId);
+    if (!fileInput || !checkbox) return;
+    checkbox.addEventListener('change', function() {
+      if (this.checked) {
+        fileInput.value = '';
+        fileInput.disabled = true;
+      } else {
+        fileInput.disabled = false;
+      }
+    });
+    fileInput.addEventListener('change', function() {
+      if (this.value) {
+        checkbox.checked = false;
+        fileInput.disabled = false;
+      }
+    });
+  }
+
+  // List all file+checkbox pairs for "To Follow" logic
+  const toFollowPairs = [
+    ['transcript_diploma', 'transcript_to_follow'],
+    ['bir_2316', 'bir_to_follow'],
+    ['coe_clearance', 'coe_to_follow'],
+    ['barangay_clearance', 'barangay_to_follow'],
+    ['police_clearance', 'police_to_follow'],
+    ['nbi_clearance', 'nbi_to_follow']
+  ];
+
+  // Setup all pairs
+  toFollowPairs.forEach(([fileId, checkId]) => setupToFollowToggle(fileId, checkId));
+
+  // Marriage contract "Not Married" logic
+  const marriageContractInput = document.getElementById('marriage_contract');
+  const notMarriedRadio = document.getElementById('not_married');
+  if (notMarriedRadio && marriageContractInput) {
+    notMarriedRadio.addEventListener('change', function() {
+      if (this.checked) {
+        marriageContractInput.value = '';
+        marriageContractInput.disabled = true;
+      } else {
+        marriageContractInput.disabled = false;
+      }
+    });
+    marriageContractInput.addEventListener('change', function() {
+      if (this.value) {
+        notMarriedRadio.checked = false;
+        marriageContractInput.disabled = false;
+      }
+    });
+  }
+
+  // Children birth certificates "None" logic
+  const childrenBirthInput = document.getElementById('children_birth_certificates');
+  const childrenNoneCheckbox = document.getElementById('children_none');
+  if (childrenNoneCheckbox && childrenBirthInput) {
+    childrenNoneCheckbox.addEventListener('change', function() {
+      if (this.checked) {
+        childrenBirthInput.value = '';
+        childrenBirthInput.disabled = true;
+      } else {
+        childrenBirthInput.disabled = false;
+      }
+    });
+    childrenBirthInput.addEventListener('change', function() {
+      if (this.value) {
+        childrenNoneCheckbox.checked = false;
+        childrenBirthInput.disabled = false;
+      }
+    });
+  }
+
+  // No "To Follow" logic needed for SSS, E1/E4, Philhealth, Pag-ibig, TIN as they are file-only fields
+
+  const childrenNone = fields.children_none === 'none';
+const notMarried = fields.marital_status === 'not_married';
+
+let specialNotes = '';
+if (childrenNone) {
+  specialNotes += '<li>Applicant checked "None" for Children Birth Certificates.</li>';
+}
+if (notMarried) {
+  specialNotes += '<li>Applicant checked "Not Married" for Marriage Contract.</li>';
+}
+    document.getElementById('specialNotesContainer').innerHTML = `${specialNotes ? `<strong>Special Notes:</strong><ul>${specialNotes}</ul>` : ''}`;
+    </script>
+  </body>
+</html>
+
