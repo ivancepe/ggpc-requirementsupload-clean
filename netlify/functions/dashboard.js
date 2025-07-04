@@ -1,5 +1,4 @@
 const { google } = require('googleapis');
-const CREDENTIALS = require('./credentials.json');
 
 const REQUIRED_FILES = [
   'Resume.pdf',
@@ -25,6 +24,10 @@ const normalize = str =>
 
 exports.handler = async () => {
   try {
+    // ✅ Read credentials from env var
+    const credentialsJSON = Buffer.from(process.env.GOOGLE_CREDENTIALS, 'base64').toString('utf8');
+    const CREDENTIALS = JSON.parse(credentialsJSON);
+
     const auth = new google.auth.GoogleAuth({
       credentials: CREDENTIALS,
       scopes: ['https://www.googleapis.com/auth/drive.readonly'],
@@ -56,8 +59,13 @@ exports.handler = async () => {
         return uploadedFiles.some(fileName => fileName === reqNorm) ? req : null;
       }).filter(Boolean);
 
-      const childrenNone = uploadedFiles.some(fileName => normalize(fileName) === 'children-bc') && !uploadedFiles.some(fileName => normalize(fileName) === 'children-bc-yes');
-      const notMarried = uploadedFiles.some(fileName => normalize(fileName) === 'marriage-contract') && !uploadedFiles.some(fileName => normalize(fileName) === 'marriage-contract-yes');
+      const childrenNone =
+        uploadedFiles.some(fileName => normalize(fileName) === 'children-bc') &&
+        !uploadedFiles.some(fileName => normalize(fileName) === 'children-bc-yes');
+
+      const notMarried =
+        uploadedFiles.some(fileName => normalize(fileName) === 'marriage-contract') &&
+        !uploadedFiles.some(fileName => normalize(fileName) === 'marriage-contract-yes');
 
       applicants.push({
         name: folder.name,
@@ -78,6 +86,7 @@ exports.handler = async () => {
       }),
     };
   } catch (err) {
+    console.error('DASHBOARD ERROR:', err);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: err.message }),
