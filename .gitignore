@@ -3,4 +3,4 @@
 
 .env
 
-netlify/functions/credentials.json
+netlify/functions/service-account.json
