@@ -1,3 +1,6 @@
+const SHARED_DRIVE_ID = '0AKdbJt90_Md2Uk9PVA';
+const APPLICANT_PARENT_FOLDER_ID = '1TdHKXJzci-WND9FpHWVf9HFjBJk3Obc9';
+
 const { google } = require('googleapis');
 const Busboy = require('busboy');
 const fs = require('fs');
@@ -6,7 +9,6 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 const axios = require('axios');
 
-// decode credentials from Netlify env
 const credentialsJSON = Buffer.from(process.env.GOOGLE_CREDENTIALS, 'base64').toString('utf8');
 const credentials = JSON.parse(credentialsJSON);
 
@@ -32,18 +34,15 @@ exports.handler = async (event) => {
 
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
       if (!filename) {
-        file.resume(); // drain
+        file.resume();
         return;
       }
-
       const safeFilename = filename.replace(/[^a-zA-Z0-9.\-_]/g, '_');
       const filepath = path.join(os.tmpdir(), `${Date.now()}-${Math.random().toString(36).substring(2)}-${safeFilename}`);
       const writeStream = fs.createWriteStream(filepath);
       let fileSize = 0;
 
-      file.on('data', (data) => {
-        fileSize += data.length;
-      });
+      file.on('data', (data) => { fileSize += data.length; });
       file.pipe(writeStream);
 
       uploads.push(
@@ -62,35 +61,53 @@ exports.handler = async (event) => {
     });
 
     busboy.on('finish', async () => {
+      let uploadedFiles = [];
       try {
-        const uploadedFiles = await Promise.all(uploads);
+        uploadedFiles = (await Promise.all(uploads)).filter(Boolean);
 
         const auth = new google.auth.GoogleAuth({
           credentials,
-          scopes: ['https://www.googleapis.com/auth/drive.file'],
+          scopes: ['https://www.googleapis.com/auth/drive'],
         });
         const drive = google.drive({ version: 'v3', auth });
 
         const fullName = fields.fullname || 'Unknown';
         const safeFullName = fullName.replace(/[^a-zA-Z0-9,\- ]/g, '').trim();
 
-        const parentFolderId = '10UqtgofK9WB28q3fm7izghzHBCoj4Rdr';
+        const parentFolderId = APPLICANT_PARENT_FOLDER_ID;
         const subfolderId = await getOrCreateSubfolder(drive, parentFolderId, fullName);
 
-        for (const file of uploadedFiles) {
+        // Upload all files in parallel
+        const uploadResults = await Promise.all(uploadedFiles.map(async (file) => {
           const renamedFilename = `${safeFullName} - ${file.filename}`;
-          await drive.files.create({
-            requestBody: {
-              name: renamedFilename,
-              parents: [subfolderId],
-            },
-            media: {
-              mimeType: file.mimetype,
-              body: fs.createReadStream(file.filepath),
-            },
-          });
-          fs.unlinkSync(file.filepath);
-        }
+          try {
+            const uploadResponse = await drive.files.create({
+              requestBody: {
+                name: renamedFilename,
+                parents: [subfolderId],
+              },
+              media: {
+                mimeType: file.mimetype,
+                body: fs.createReadStream(file.filepath),
+              },
+              fields: 'id',
+              supportsAllDrives: true,
+            }, {
+              driveId: SHARED_DRIVE_ID,
+              supportsAllDrives: true,
+            });
+
+            // Optionally set permissions here if needed
+            // await drive.permissions.create({ ... });
+
+            return { ...file, id: uploadResponse.data.id };
+          } catch (err) {
+            console.error('Upload failed:', err);
+            return null;
+          } finally {
+            fs.unlink(file.filepath, () => {});
+          }
+        }));
 
         const REQUIRED_FILES = [
           'Resume', 'Birth Certificate', 'Marriage Contract', 'Children-BC', 'TOR-Diploma',
@@ -180,7 +197,7 @@ ${specialNotes ? `<strong>Special Notes:</strong><ul>${specialNotes}</ul>` : ''}
 
         await transporter.sendMail({
           from: `"GGPC Recruitment System" <${process.env.EMAIL_USER}>`,
-          to: 'ivangolosinda2@gmail.com',
+          to: 'ivangolosinda2@gmail.com', //recruitment.ggpc@gmail.com
           subject: `New Requirements Submission: ${fields.fullname}`,
           html: hrEmailBody,
         });
@@ -237,6 +254,10 @@ async function getOrCreateSubfolder(drive, parentFolderId, folderName) {
     q: `'${parentFolderId}' in parents and name='${folderName}' and mimeType='application/vnd.google-apps.folder' and trashed=false`,
     fields: 'files(id, name)',
     spaces: 'drive',
+    driveId: SHARED_DRIVE_ID,
+    corpora: 'drive', 
+    includeItemsFromAllDrives: true,
+    supportsAllDrives: true,
   });
   if (res.data.files.length > 0) {
     return res.data.files[0].id;
@@ -245,9 +266,13 @@ async function getOrCreateSubfolder(drive, parentFolderId, folderName) {
     requestBody: {
       name: folderName,
       mimeType: 'application/vnd.google-apps.folder',
-      parents: [parentFolderId],
+      parents: [parentFolderId], // This is the ID from the Shared Drive
     },
     fields: 'id',
+    supportsAllDrives: true,
+  }, {
+    driveId: SHARED_DRIVE_ID,
+    supportsAllDrives: true,
   });
   return folder.data.id;  
 }
