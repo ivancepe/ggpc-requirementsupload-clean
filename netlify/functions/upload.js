@@ -197,7 +197,7 @@ ${specialNotes ? `<strong>Special Notes:</strong><ul>${specialNotes}</ul>` : ''}
 
         await transporter.sendMail({
           from: `"GGPC Recruitment System" <${process.env.EMAIL_USER}>`,
-          to: 'ivangolosinda2@gmail.com', //recruitment.ggpc@gmail.com
+          to: 'recruitment.ggpc@gmail.com', //recruitment.ggpc@gmail.com
           subject: `New Requirements Submission: ${fields.fullname}`,
           html: hrEmailBody,
         });

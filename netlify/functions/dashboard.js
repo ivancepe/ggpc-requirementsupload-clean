@@ -36,8 +36,12 @@ exports.handler = async () => {
 
     // 1. List applicant folders (replace with your parent folder ID)
     const { data } = await drive.files.list({
-      q: "'10UqtgofK9WB28q3fm7izghzHBCoj4Rdr' in parents and mimeType = 'application/vnd.google-apps.folder'",
+      q: "'1TdHKXJzci-WND9FpHWVf9HFjBJk3Obc9' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false",
       fields: 'files(id, name)',
+      supportsAllDrives: true,
+      includeItemsFromAllDrives: true,
+      driveId: '0AKdbJt90_Md2Uk9PVA', // your Shared Drive ID
+      corpora: 'drive',
     });
 
     const applicants = [];
@@ -46,6 +50,10 @@ exports.handler = async () => {
       const files = await drive.files.list({
         q: `'${folder.id}' in parents`,
         fields: 'files(name)',
+        supportsAllDrives: true,
+        includeItemsFromAllDrives: true,
+        driveId: '0AKdbJt90_Md2Uk9PVA',
+        corpora: 'drive',
       });
 
       // Use the actual file names (lowercased, trimmed)
