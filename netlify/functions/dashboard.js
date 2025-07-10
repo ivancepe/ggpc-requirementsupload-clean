@@ -15,8 +15,8 @@ const REQUIRED_FILES = [
   'E1E4',
   'Philhealth',
   'Pag-ibig',
-  'TIN'
-  // ...add all required files here
+  'TIN',
+  'Medical.pdf'
 ];
 
 const normalize = str =>

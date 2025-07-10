@@ -79,7 +79,10 @@ exports.handler = async (event) => {
 
         // Upload all files in parallel
         const uploadResults = await Promise.all(uploadedFiles.map(async (file) => {
-          const renamedFilename = `${safeFullName} - ${file.filename}`;
+          let renamedFilename = file.filename;
+          if (file.fieldname === 'medical_basic5') {
+            renamedFilename = 'Medical.pdf';
+          }
           try {
             const uploadResponse = await drive.files.create({
               requestBody: {
@@ -111,7 +114,8 @@ exports.handler = async (event) => {
 
         const REQUIRED_FILES = [
           'Resume', 'Birth Certificate', 'Marriage Contract', 'Children-BC', 'TOR-Diploma',
-          'BIR2316', 'COE', 'Barangay', 'Police', 'NBI', 'SSS', 'E1E4', 'Philhealth', 'Pag-ibig', 'TIN'
+          'BIR2316', 'COE', 'Barangay', 'Police', 'NBI', 'SSS', 'E1E4', 'Philhealth', 'Pag-ibig', 'TIN',
+          'Medical.pdf',
         ];
 
         const uploadedNames = uploadedFiles
@@ -133,6 +137,11 @@ exports.handler = async (event) => {
             toFollowList.push(req);
           }
         });
+
+        // // Example for summary
+        // if (fields.medical_basic5) {
+        //   uploadedList.push('Medical (Basic 5)');
+        // }
 
         const childrenNone = fields.children_none === 'none';
         const notMarried = fields.marital_status === 'not_married';

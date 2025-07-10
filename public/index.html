@@ -20,6 +20,7 @@
         <li>All Requirements must be uploaded in <strong>PDF Format.</strong></li>
         <li>Please ensure to upload each requirements in it's corresponding upload field</li>
         <li>If more than one child, put all children Birth Certificate in a single pdf file.</li>
+        <li>Submit at least two (2) of the following clearances: Barangay, Police, or NBI.</li>
         <li>Make sure to rename your files exactly as listed in the File Naming Guide below before uploading.</li>
     </p>
     <!-- Add this above your form, inside your main card -->
@@ -50,11 +51,12 @@
           <li>Philhealth.pdf</li>
           <li>Pagibig.pdf</li>
           <li>TIN.pdf</li>
+          <li>Medical.pdf</li>
         </ul>
       </div>
     </div>
     <form class="mt-4" id="uploadForm" enctype="multipart/form-data">
-      <input type="text" name="fullname" placeholder="Full Name" required class="mb-2 px-4 py-2 border rounded w-full">
+      <input type="text" name="fullname" placeholder="Last, First Initial" required class="mb-2 px-4 py-2 border rounded w-full">
       <input type="email" name="email" placeholder="Email" required class="mb-2 px-4 py-2 border rounded w-full">
       <label class="block font-medium mb-1">Resume:</label>
       <input type="file" name="resume" required class="mb-2 block w-full text-sm text-gray-700">
@@ -148,6 +150,15 @@
 
       <label class="block font-medium mb-1">TIN:</label>
       <input type="file" name="tin" id="tin" required class="mb-2 block w-full text-sm text-gray-700">
+
+      <label class="block font-medium mb-1">Medical (Basic 5):</label>
+      <div class="mb-2">
+        <input type="file" name="medical_basic5" id="medical_basic5" required class="block w-full text-sm text-gray-700" />
+        <p class="text-xs text-gray-600 mt-1">
+          <strong>Notice:</strong> This document must have a Physician's Assessment: <em>Fit for Work/Unfit for Work</em>
+        </p>
+      </div>
+
       <button id="uploadBtn" type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-2 rounded shadow w-full">
         <span id="uploadBtnText">Upload Files</span>
       </button>
