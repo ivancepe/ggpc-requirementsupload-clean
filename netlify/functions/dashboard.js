@@ -2,8 +2,8 @@ const { google } = require('googleapis');
 
 const REQUIRED_FILES = [
   'Resume.pdf',
-  'Birth Certificate.pdf',
-  'Marriage Contract.pdf',
+  'Birth Certificate',
+  'Marriage Contract',
   'Children-BC',
   'TOR-Diploma',
   'BIR2316',
@@ -16,7 +16,7 @@ const REQUIRED_FILES = [
   'Philhealth',
   'Pag-ibig',
   'TIN',
-  'Medical.pdf'
+  'Medical'
 ];
 
 const normalize = str =>

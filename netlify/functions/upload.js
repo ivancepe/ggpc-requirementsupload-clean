@@ -115,7 +115,7 @@ exports.handler = async (event) => {
         const REQUIRED_FILES = [
           'Resume', 'Birth Certificate', 'Marriage Contract', 'Children-BC', 'TOR-Diploma',
           'BIR2316', 'COE', 'Barangay', 'Police', 'NBI', 'SSS', 'E1E4', 'Philhealth', 'Pag-ibig', 'TIN',
-          'Medical.pdf',
+          'Medical',
         ];
 
         const uploadedNames = uploadedFiles
