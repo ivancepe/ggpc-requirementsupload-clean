@@ -38,7 +38,7 @@
     async function loadDashboard() {
       const res = await fetch('/.netlify/functions/dashboard');
       const data = await res.json();
-      allApplicants = data.applicants;
+      allApplicants = data.applicants;SVGLinearGradientElement
       requiredFiles = data.requiredFiles;
       renderTable(allApplicants); // Show all by default
     }
