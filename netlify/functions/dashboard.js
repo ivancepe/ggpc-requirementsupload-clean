@@ -1,7 +1,7 @@
 const { google } = require('googleapis');
 
 const REQUIRED_FILES = [
-  'Resume.pdf',
+  'Resume',
   'Birth Certificate',
   'Marriage Contract',
   'Children-BC',
