@@ -246,14 +246,18 @@ async function getKintoneRecordIdByName(applicantName) {
   const resp = await axios.get(url, {
     params: {
       app: KINTONE_APP_ID,
-      query: `Full_Name = "${applicantName.trim()}"`,
+      query: `Full_Name like "${applicantName.trim()}"`, // use like instead of =
       fields: '$id,Full_Name',
     },
     headers,
   });
 
-  if (resp.data.records.length > 0 && resp.data.records[0].$id) {
-    return resp.data.records[0].$id.value;
+  const match = resp.data.records.find(
+    r => r.Full_Name.value.trim().toLowerCase() === applicantName.trim().toLowerCase()
+  );
+
+  if (match) {
+    return match.$id.value;
   }
   return null;
 }
