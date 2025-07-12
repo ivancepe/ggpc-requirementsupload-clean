@@ -331,6 +331,19 @@
         }
       });
   });
+
+  // When name is selected, auto-fetch and fill the email
+  document.getElementById('fullname').addEventListener('change', function() {
+    const name = this.value;
+    if (!name) return;
+    fetch('/.netlify/functions/get-email-by-name?name=' + encodeURIComponent(name))
+      .then(res => res.json())
+      .then(data => {
+        if (data.email) {
+          document.getElementById('email').value = data.email;
+        }
+      });
+  });
     </script>
   </body>
 </html>
