@@ -56,38 +56,41 @@
       </div>
     </div>
     <form class="mt-4" id="uploadForm" enctype="multipart/form-data">
-      <input type="text" name="fullname" placeholder="Last, First Middle" required class="mb-2 px-4 py-2 border rounded w-full">
-      <input type="email" name="email" placeholder="Email" required class="mb-2 px-4 py-2 border rounded w-full">
+      <!-- Replace your name input with this: -->
+      <label class="block font-medium mb-1" for="fullname">Full Name:</label>
+      <select name="fullname" id="fullname" required class="mb-2 block w-full text-sm text-gray-700">
+        <option value="">Loading names...</option>
+      </select>
+
+      <input type="email" name="email" id="email" placeholder="Email" required class="mb-2 px-4 py-2 border rounded w-full">
+
       <label class="block font-medium mb-1">Resume:</label>
-      <input type="file" name="resume" required class="mb-2 block w-full text-sm text-gray-700">
+      <input type="file" name="resume" required class="mb-2 block w-full text-sm text-gray-700" accept=".pdf">
 
       <label class="block font-medium mb-1">NSO / PSA Birth Certificate:</label>
-      <input type="file" name="birth_certificate" required class="mb-2 block w-full text-sm text-gray-700">
+      <input type="file" name="birth_certificate" required class="mb-2 block w-full text-sm text-gray-700" accept=".pdf">
 
-      <!-- Marriage Contract: remove required, since it has a checkbox -->
       <label class="block font-medium mb-1">NSO / PSA Authenticated Marriage Contract:</label>
       <div class="flex items-center mb-4">
-        <input type="file" name="marriage_contract" id="marriage_contract" class="block w-full text-sm text-gray-700" />
+        <input type="file" name="marriage_contract" id="marriage_contract" class="block w-full text-sm text-gray-700" accept=".pdf" />
         <label class="ml-4 flex items-center whitespace-nowrap">
           <input type="checkbox" name="marital_status" id="not_married" value="not_married" class="mr-2">
           Not Married
         </label>
       </div>
 
-      <!-- Children Birth Certificates: remove required, since it has a checkbox -->
       <label class="block font-medium mb-1">Children Birth Certificates:</label>
       <div class="flex items-center mb-4">
-        <input type="file" name="children_birth_certificates" id="children_birth_certificates" class="block w-full text-sm text-gray-700" multiple />
+        <input type="file" name="children_birth_certificates" id="children_birth_certificates" class="block w-full text-sm text-gray-700" multiple accept=".pdf" />
         <label class="ml-4 flex items-center">
           <input type="checkbox" name="children_none" id="children_none" value="none" class="mr-2">
           None
         </label>
       </div>
 
-      <!-- For all other fields without checkboxes, add required -->
       <label class="block font-medium mb-1">Transcript of Record / Diploma:</label>
       <div class="flex items-center mb-4">
-        <input type="file" name="transcript_diploma" id="transcript_diploma" class="block w-full text-sm text-gray-700" />
+        <input type="file" name="transcript_diploma" id="transcript_diploma" class="block w-full text-sm text-gray-700" accept=".pdf" />
         <label class="ml-4 flex items-center whitespace-nowrap">
           <input type="checkbox" name="transcript_to_follow" id="transcript_to_follow" value="to_follow" class="mr-2">
           To Follow
@@ -95,7 +98,7 @@
       </div>
       <label class="block font-medium mb-1">BIR Form 2316:</label>
       <div class="flex items-center mb-4">
-        <input type="file" name="bir_2316" id="bir_2316" class="block w-full text-sm text-gray-700" />
+        <input type="file" name="bir_2316" id="bir_2316" class="block w-full text-sm text-gray-700" accept=".pdf" />
         <label class="ml-4 flex items-center whitespace-nowrap">
           <input type="checkbox" name="bir_to_follow" id="bir_to_follow" value="to_follow" class="mr-2">
           To Follow
@@ -103,7 +106,7 @@
       </div>
       <label class="block font-medium mb-1">Certificate of Employment/Clearance (from previous employer):</label>
       <div class="flex items-center mb-4">
-        <input type="file" name="coe_clearance" id="coe_clearance" class="block w-full text-sm text-gray-700" />
+        <input type="file" name="coe_clearance" id="coe_clearance" class="block w-full text-sm text-gray-700" accept=".pdf" />
         <label class="ml-4 flex items-center whitespace-nowrap">
           <input type="checkbox" name="coe_to_follow" id="coe_to_follow" value="to_follow" class="mr-2">
           To Follow
@@ -111,7 +114,7 @@
       </div>
       <label class="block font-medium mb-1">Barangay Clearance:</label>
       <div class="flex items-center mb-4">
-        <input type="file" name="barangay_clearance" id="barangay_clearance" class="block w-full text-sm text-gray-700" />
+        <input type="file" name="barangay_clearance" id="barangay_clearance" class="block w-full text-sm text-gray-700" accept=".pdf" />
         <label class="ml-4 flex items-center whitespace-nowrap">
           <input type="checkbox" name="barangay_to_follow" id="barangay_to_follow" value="to_follow" class="mr-2">
           To Follow
@@ -120,7 +123,7 @@
 
       <label class="block font-medium mb-1">Police Clearance:</label>
       <div class="flex items-center mb-4">
-        <input type="file" name="police_clearance" id="police_clearance" class="block w-full text-sm text-gray-700" />
+        <input type="file" name="police_clearance" id="police_clearance" class="block w-full text-sm text-gray-700" accept=".pdf" />
         <label class="ml-4 flex items-center whitespace-nowrap">
           <input type="checkbox" name="police_to_follow" id="police_to_follow" value="to_follow" class="mr-2">
           To Follow
@@ -129,7 +132,7 @@
 
       <label class="block font-medium mb-1">NBI Clearance:</label>
       <div class="flex items-center mb-4">
-        <input type="file" name="nbi_clearance" id="nbi_clearance" class="block w-full text-sm text-gray-700" />
+        <input type="file" name="nbi_clearance" id="nbi_clearance" class="block w-full text-sm text-gray-700" accept=".pdf" />
         <label class="ml-4 flex items-center whitespace-nowrap">
           <input type="checkbox" name="nbi_to_follow" id="nbi_to_follow" value="to_follow" class="mr-2">
           To Follow
@@ -137,23 +140,23 @@
       </div>
 
       <label class="block font-medium mb-1">SSS Number:</label>
-      <input type="file" name="sss_number" id="sss_number" required class="mb-2 block w-full text-sm text-gray-700">
+      <input type="file" name="sss_number" id="sss_number" required class="mb-2 block w-full text-sm text-gray-700" accept=".pdf">
 
       <label class="block font-medium mb-1">E1 / E4 Form (ESI):</label>
-      <input type="file" name="e1_e4_form" id="e1_e4_form" required class="mb-2 block w-full text-sm text-gray-700">
+      <input type="file" name="e1_e4_form" id="e1_e4_form" required class="mb-2 block w-full text-sm text-gray-700" accept=".pdf">
 
       <label class="block font-medium mb-1">Philhealth ID / MDR:</label>
-      <input type="file" name="philhealth_id" id="philhealth_id" required class="mb-2 block w-full text-sm text-gray-700">
+      <input type="file" name="philhealth_id" id="philhealth_id" required class="mb-2 block w-full text-sm text-gray-700" accept=".pdf">
 
       <label class="block font-medium mb-1">Pag-ibig ID / MDF:</label>
-      <input type="file" name="pagibig_id" id="pagibig_id" required class="mb-2 block w-full text-sm text-gray-700">
+      <input type="file" name="pagibig_id" id="pagibig_id" required class="mb-2 block w-full text-sm text-gray-700" accept=".pdf">
 
       <label class="block font-medium mb-1">TIN:</label>
-      <input type="file" name="tin" id="tin" required class="mb-2 block w-full text-sm text-gray-700">
+      <input type="file" name="tin" id="tin" required class="mb-2 block w-full text-sm text-gray-700" accept=".pdf">
 
       <label class="block font-medium mb-1">Medical (Basic 5):</label>
       <div class="mb-2">
-        <input type="file" name="medical_basic5" id="medical_basic5" required class="block w-full text-sm text-gray-700" />
+        <input type="file" name="medical_basic5" id="medical_basic5" required class="block w-full text-sm text-gray-700" accept=".pdf" />
         <p class="text-xs text-gray-600 mt-1">
           <strong>Notice:</strong> This document must have a Physician's Assessment: <em>Fit for Work/Unfit for Work</em>
         </p>
@@ -293,17 +296,41 @@
 
   // No "To Follow" logic needed for SSS, E1/E4, Philhealth, Pag-ibig, TIN as they are file-only fields
 
-  const childrenNone = fields.children_none === 'none';
-const notMarried = fields.marital_status === 'not_married';
+  // 1. Populate the dropdown with all names
+  fetch('/.netlify/functions/get-names')
+    .then(res => res.json())
+    .then(names => {
+      const select = document.getElementById('fullname');
+      select.innerHTML = '<option value="">Select your name</option>';
+      names.forEach(name => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        select.appendChild(option);
+      });
+    })
+    .catch(() => {
+      document.getElementById('fullname').innerHTML = '<option value="">Could not load names</option>';
+    });
 
-let specialNotes = '';
-if (childrenNone) {
-  specialNotes += '<li>Applicant checked "None" for Children Birth Certificates.</li>';
-}
-if (notMarried) {
-  specialNotes += '<li>Applicant checked "Not Married" for Marriage Contract.</li>';
-}
-    document.getElementById('specialNotesContainer').innerHTML = `${specialNotes ? `<strong>Special Notes:</strong><ul>${specialNotes}</ul>` : ''}`;
+  // 2. When email is entered, auto-select the name if found
+  document.getElementById('email').addEventListener('blur', function() {
+    const email = this.value.trim();
+    if (!email) return;
+    fetch('/.netlify/functions/get-name-by-email?email=' + encodeURIComponent(email))
+      .then(res => res.json())
+      .then(data => {
+        if (data.name) {
+          const select = document.getElementById('fullname');
+          for (const option of select.options) {
+            if (option.value === data.name) {
+              select.value = data.name;
+              break;
+            }
+          }
+        }
+      });
+  });
     </script>
   </body>
 </html>

@@ -9,7 +9,7 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 const axios = require('axios');
 
-const credentialsJSON = Buffer.from(process.env.GOOGLE_CREDENTIALS, 'base64').toString('utf8');
+const credentialsJSON = Buffer.from(process.env.GOOGLE_CREDENTIALS, 'base64').toString('utf8'); // Read credentials from env var
 const credentials = JSON.parse(credentialsJSON);
 
 exports.handler = async (event) => {
