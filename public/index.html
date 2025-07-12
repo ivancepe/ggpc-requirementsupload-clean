@@ -347,14 +347,19 @@
 
   function hideUploadedFields(uploadedFiles) {
     // Normalize file names for comparison
-    const normalized = uploadedFiles.map(f => f.toLowerCase().replace(/[^a-z0-9]/g, ''));
+    const normalized = uploadedFiles.map(f =>
+      f.replace(/^[^-]+ - /, '') // Remove "Full Name - " prefix
+       .replace(/\.[^/.]+$/, '') // Remove extension
+       .toLowerCase()
+       .replace(/[^a-z0-9]/g, '')
+    );
     // Map of your input IDs to expected file names (normalized)
     const fileMap = {
       resume: 'resume',
       birth_certificate: 'birthcertificate',
       marriage_contract: 'marriagecontract',
-      children_birth_certificates: 'children-bc',
-      transcript_diploma: 'tor-diploma',
+      children_birth_certificates: 'childrenbc',
+      transcript_diploma: 'tordiploma',
       bir_2316: 'bir2316',
       coe_clearance: 'coe',
       barangay_clearance: 'barangay',
@@ -370,7 +375,6 @@
     Object.entries(fileMap).forEach(([inputId, fileKey]) => {
       const input = document.getElementById(inputId);
       if (input) {
-        // Hide the parent div if the file is already uploaded
         const parentDiv = input.closest('.mb-4') || input.closest('.mb-2') || input.parentElement;
         if (parentDiv) {
           parentDiv.style.display = normalized.includes(fileKey) ? 'none' : '';

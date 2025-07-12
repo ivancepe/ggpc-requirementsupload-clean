@@ -74,15 +74,15 @@ exports.handler = async (event) => {
         const fullName = fields.fullname || 'Unknown';
         const safeFullName = fullName.replace(/[^a-zA-Z0-9,\- ]/g, '').trim();
 
-        const parentFolderId = APPLICANT_PARENT_FOLDER_ID;
-        const subfolderId = await getOrCreateSubfolder(drive, parentFolderId, fullName);
-
-        // Upload all files in parallel
         const uploadResults = await Promise.all(uploadedFiles.map(async (file) => {
-          let renamedFilename = file.filename;
-          if (file.fieldname === 'medical_basic5') {
-            renamedFilename = 'Medical.pdf';
-          }
+          let docLabel = file.filename; // e.g. "Resume.pdf"
+          // Optionally, map fieldname to label if needed
+          if (file.fieldname === 'medical_basic5') docLabel = 'Medical.pdf';
+          // ...add more mappings as needed...
+
+          // Always rename as "Full Name - Document.pdf"
+          const renamedFilename = `${safeFullName} - ${docLabel}`;
+
           try {
             const uploadResponse = await drive.files.create({
               requestBody: {
