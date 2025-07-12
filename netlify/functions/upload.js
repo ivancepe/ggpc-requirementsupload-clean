@@ -74,13 +74,31 @@ exports.handler = async (event) => {
         const fullName = fields.fullname || 'Unknown';
         const safeFullName = fullName.replace(/[^a-zA-Z0-9,\- ]/g, '').trim();
 
-        const uploadResults = await Promise.all(uploadedFiles.map(async (file) => {
-          let docLabel = file.filename; // e.g. "Resume.pdf"
-          // Optionally, map fieldname to label if needed
-          if (file.fieldname === 'medical_basic5') docLabel = 'Medical.pdf';
-          // ...add more mappings as needed...
+        // Get or create the applicant's subfolder in Google Drive
+        const subfolderId = await getOrCreateSubfolder(drive, APPLICANT_PARENT_FOLDER_ID, safeFullName);
 
-          // Always rename as "Full Name - Document.pdf"
+        const uploadResults = await Promise.all(uploadedFiles.map(async (file) => {
+          // Map fieldname to document label if needed
+          let docLabel = '';
+          switch (file.fieldname) {
+            case 'resume': docLabel = 'Resume.pdf'; break;
+            case 'birth_certificate': docLabel = 'Birth Certificate.pdf'; break;
+            case 'marriage_contract': docLabel = 'Marriage Contract.pdf'; break;
+            case 'children_birth_certificates': docLabel = 'Children-BC.pdf'; break;
+            case 'transcript_diploma': docLabel = 'TOR-Diploma.pdf'; break;
+            case 'bir_2316': docLabel = 'BIR2316.pdf'; break;
+            case 'coe_clearance': docLabel = 'COE.pdf'; break;
+            case 'barangay_clearance': docLabel = 'Barangay.pdf'; break;
+            case 'police_clearance': docLabel = 'Police.pdf'; break;
+            case 'nbi_clearance': docLabel = 'NBI.pdf'; break;
+            case 'sss_number': docLabel = 'SSS.pdf'; break;
+            case 'e1_e4_form': docLabel = 'E1E4.pdf'; break;
+            case 'philhealth_id': docLabel = 'Philhealth.pdf'; break;
+            case 'pagibig_id': docLabel = 'Pagibig.pdf'; break;
+            case 'tin': docLabel = 'TIN.pdf'; break;
+            case 'medical_basic5': docLabel = 'Medical.pdf'; break;
+            default: docLabel = file.filename; // fallback
+          }
           const renamedFilename = `${safeFullName} - ${docLabel}`;
 
           try {
@@ -103,7 +121,7 @@ exports.handler = async (event) => {
             // Optionally set permissions here if needed
             // await drive.permissions.create({ ... });
 
-            return { ...file, id: uploadResponse.data.id };
+            return { ...file, id: uploadResponse.data.id, renamedFilename };
           } catch (err) {
             console.error('Upload failed:', err);
             return null;
@@ -118,9 +136,9 @@ exports.handler = async (event) => {
           'Medical',
         ];
 
-        const uploadedNames = uploadedFiles
+        const uploadedNames = uploadResults
           .filter(Boolean)
-          .map(f => f.filename.replace(/^[^-\n]+ - /, '').replace(/\.[^/.]+$/, '').toLowerCase().trim());
+          .map(f => f.renamedFilename.replace(/^[^-\n]+ - /, '').replace(/\.[^/.]+$/, '').toLowerCase().trim());
 
         const uploadedList = [];
         const toFollowList = [];

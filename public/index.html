@@ -388,6 +388,7 @@
     fetch('/.netlify/functions/get-uploaded-files?name=' + encodeURIComponent(name))
       .then(res => res.json())
       .then(uploadedFiles => {
+        console.log('Uploaded files:', uploadedFiles); // Debug
         hideUploadedFields(uploadedFiles);
       });
   }
