@@ -57,110 +57,175 @@
     </div>
     <form class="mt-4" id="uploadForm" enctype="multipart/form-data">
       <!-- Replace your name input with this: -->
-      <label class="block font-medium mb-1" for="fullname">Full Name:</label>
-      <select name="fullname" id="fullname" required class="mb-2 block w-full text-sm text-gray-700">
-        <option value="">Loading names...</option>
-      </select>
-
+       <label class="block font-medium mb-1" for="email">Enter your Email:</label>
       <input type="email" name="email" id="email" placeholder="Email" required class="mb-2 px-4 py-2 border rounded w-full">
 
-      <label class="block font-medium mb-1">Resume:</label>
-      <input type="file" name="resume" required class="mb-2 block w-full text-sm text-gray-700" accept=".pdf">
+      <label class="block font-medium mb-1" for="fullname">Full Name:</label>
+      <input type="text" name="fullname" id="fullname" required class="mb-2 block w-full text-sm text-gray-700 bg-gray-200" readonly>
+      
 
-      <label class="block font-medium mb-1">NSO / PSA Birth Certificate:</label>
-      <input type="file" name="birth_certificate" required class="mb-2 block w-full text-sm text-gray-700" accept=".pdf">
+      <!-- Resume -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_resume">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="resume">Resume:</label>
+    <input type="file" name="resume" id="resume" required class="block w-full text-sm text-gray-700" accept=".pdf">
+  </div>
+</div>
 
-      <label class="block font-medium mb-1">NSO / PSA Authenticated Marriage Contract:</label>
-      <div class="flex items-center mb-4">
-        <input type="file" name="marriage_contract" id="marriage_contract" class="block w-full text-sm text-gray-700" accept=".pdf" />
-        <label class="ml-4 flex items-center whitespace-nowrap">
-          <input type="checkbox" name="marital_status" id="not_married" value="not_married" class="mr-2">
-          Not Married
-        </label>
-      </div>
+<!-- Birth Certificate -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_birth_certificate">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="birth_certificate">NSO / PSA Birth Certificate:</label>
+    <input type="file" name="birth_certificate" id="birth_certificate" required class="block w-full text-sm text-gray-700" accept=".pdf">
+  </div>
+</div>
 
-      <label class="block font-medium mb-1">Children Birth Certificates:</label>
-      <div class="flex items-center mb-4">
-        <input type="file" name="children_birth_certificates" id="children_birth_certificates" class="block w-full text-sm text-gray-700" multiple accept=".pdf" />
-        <label class="ml-4 flex items-center">
-          <input type="checkbox" name="children_none" id="children_none" value="none" class="mr-2">
-          None
-        </label>
-      </div>
+<!-- Marriage Contract -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_marriage_contract">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="marriage_contract">NSO / PSA Authenticated Marriage Contract:</label>
+    <input type="file" name="marriage_contract" id="marriage_contract" class="block w-full text-sm text-gray-700" accept=".pdf">
+  </div>
+  <div class="ml-4 flex items-center">
+    <input type="checkbox" name="marital_status" id="not_married" value="not_married" class="mr-2">
+    <label for="not_married" class="whitespace-nowrap">Not Married</label>
+  </div>
+</div>
 
-      <label class="block font-medium mb-1">Transcript of Record / Diploma:</label>
-      <div class="flex items-center mb-4">
-        <input type="file" name="transcript_diploma" id="transcript_diploma" class="block w-full text-sm text-gray-700" accept=".pdf" />
-        <label class="ml-4 flex items-center whitespace-nowrap">
-          <input type="checkbox" name="transcript_to_follow" id="transcript_to_follow" value="to_follow" class="mr-2">
-          To Follow
-        </label>
-      </div>
-      <label class="block font-medium mb-1">BIR Form 2316:</label>
-      <div class="flex items-center mb-4">
-        <input type="file" name="bir_2316" id="bir_2316" class="block w-full text-sm text-gray-700" accept=".pdf" />
-        <label class="ml-4 flex items-center whitespace-nowrap">
-          <input type="checkbox" name="bir_to_follow" id="bir_to_follow" value="to_follow" class="mr-2">
-          To Follow
-        </label>
-      </div>
-      <label class="block font-medium mb-1">Certificate of Employment/Clearance (from previous employer):</label>
-      <div class="flex items-center mb-4">
-        <input type="file" name="coe_clearance" id="coe_clearance" class="block w-full text-sm text-gray-700" accept=".pdf" />
-        <label class="ml-4 flex items-center whitespace-nowrap">
-          <input type="checkbox" name="coe_to_follow" id="coe_to_follow" value="to_follow" class="mr-2">
-          To Follow
-        </label>
-      </div>
-      <label class="block font-medium mb-1">Barangay Clearance:</label>
-      <div class="flex items-center mb-4">
-        <input type="file" name="barangay_clearance" id="barangay_clearance" class="block w-full text-sm text-gray-700" accept=".pdf" />
-        <label class="ml-4 flex items-center whitespace-nowrap">
-          <input type="checkbox" name="barangay_to_follow" id="barangay_to_follow" value="to_follow" class="mr-2">
-          To Follow
-        </label>
-      </div>
+<!-- Children Birth Certificates -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_children_birth_certificates">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="children_birth_certificates">Children Birth Certificates:</label>
+    <input type="file" name="children_birth_certificates" id="children_birth_certificates" class="block w-full text-sm text-gray-700" multiple accept=".pdf">
+  </div>
+  <div class="ml-4 flex items-center">
+    <input type="checkbox" name="children_none" id="children_none" value="none" class="mr-2">
+    <label for="children_none" class="whitespace-nowrap">None</label>
+  </div>
+</div>
 
-      <label class="block font-medium mb-1">Police Clearance:</label>
-      <div class="flex items-center mb-4">
-        <input type="file" name="police_clearance" id="police_clearance" class="block w-full text-sm text-gray-700" accept=".pdf" />
-        <label class="ml-4 flex items-center whitespace-nowrap">
-          <input type="checkbox" name="police_to_follow" id="police_to_follow" value="to_follow" class="mr-2">
-          To Follow
-        </label>
-      </div>
+<!-- Transcript/Diploma -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_transcript_diploma">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="transcript_diploma">Transcript of Record / Diploma:</label>
+    <input type="file" name="transcript_diploma" id="transcript_diploma" class="block w-full text-sm text-gray-700" accept=".pdf">
+  </div>
+  <div class="ml-4 flex items-center">
+    <input type="checkbox" name="transcript_to_follow" id="transcript_to_follow" value="to_follow" class="mr-2">
+    <label for="transcript_to_follow" class="whitespace-nowrap">To Follow</label>
+  </div>
+</div>
 
-      <label class="block font-medium mb-1">NBI Clearance:</label>
-      <div class="flex items-center mb-4">
-        <input type="file" name="nbi_clearance" id="nbi_clearance" class="block w-full text-sm text-gray-700" accept=".pdf" />
-        <label class="ml-4 flex items-center whitespace-nowrap">
-          <input type="checkbox" name="nbi_to_follow" id="nbi_to_follow" value="to_follow" class="mr-2">
-          To Follow
-        </label>
-      </div>
+<!-- BIR 2316 -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_bir_2316">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="bir_2316">BIR Form 2316:</label>
+    <input type="file" name="bir_2316" id="bir_2316" class="block w-full text-sm text-gray-700" accept=".pdf">
+  </div>
+  <div class="ml-4 flex items-center">
+    <input type="checkbox" name="bir_to_follow" id="bir_to_follow" value="to_follow" class="mr-2">
+    <label for="bir_to_follow" class="whitespace-nowrap">To Follow</label>
+  </div>
+</div>
 
-      <label class="block font-medium mb-1">SSS Number:</label>
-      <input type="file" name="sss_number" id="sss_number" required class="mb-2 block w-full text-sm text-gray-700" accept=".pdf">
+<!-- COE/Clearance -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_coe_clearance">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="coe_clearance">Certificate of Employment/Clearance (from previous employer):</label>
+    <input type="file" name="coe_clearance" id="coe_clearance" class="block w-full text-sm text-gray-700" accept=".pdf">
+  </div>
+  <div class="ml-4 flex items-center">
+    <input type="checkbox" name="coe_to_follow" id="coe_to_follow" value="to_follow" class="mr-2">
+    <label for="coe_to_follow" class="whitespace-nowrap">To Follow</label>
+  </div>
+</div>
 
-      <label class="block font-medium mb-1">E1 / E4 Form (ESI):</label>
-      <input type="file" name="e1_e4_form" id="e1_e4_form" required class="mb-2 block w-full text-sm text-gray-700" accept=".pdf">
+<!-- Barangay Clearance -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_barangay_clearance">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="barangay_clearance">Barangay Clearance:</label>
+    <input type="file" name="barangay_clearance" id="barangay_clearance" class="block w-full text-sm text-gray-700" accept=".pdf">
+  </div>
+  <div class="ml-4 flex items-center">
+    <input type="checkbox" name="barangay_to_follow" id="barangay_to_follow" value="to_follow" class="mr-2">
+    <label for="barangay_to_follow" class="whitespace-nowrap">To Follow</label>
+  </div>
+</div>
 
-      <label class="block font-medium mb-1">Philhealth ID / MDR:</label>
-      <input type="file" name="philhealth_id" id="philhealth_id" required class="mb-2 block w-full text-sm text-gray-700" accept=".pdf">
+<!-- Police Clearance -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_police_clearance">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="police_clearance">Police Clearance:</label>
+    <input type="file" name="police_clearance" id="police_clearance" class="block w-full text-sm text-gray-700" accept=".pdf">
+  </div>
+  <div class="ml-4 flex items-center">
+    <input type="checkbox" name="police_to_follow" id="police_to_follow" value="to_follow" class="mr-2">
+    <label for="police_to_follow" class="whitespace-nowrap">To Follow</label>
+  </div>
+</div>
 
-      <label class="block font-medium mb-1">Pag-ibig ID / MDF:</label>
-      <input type="file" name="pagibig_id" id="pagibig_id" required class="mb-2 block w-full text-sm text-gray-700" accept=".pdf">
+<!-- NBI Clearance -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_nbi_clearance">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="nbi_clearance">NBI Clearance:</label>
+    <input type="file" name="nbi_clearance" id="nbi_clearance" class="block w-full text-sm text-gray-700" accept=".pdf">
+  </div>
+  <div class="ml-4 flex items-center">
+    <input type="checkbox" name="nbi_to_follow" id="nbi_to_follow" value="to_follow" class="mr-2">
+    <label for="nbi_to_follow" class="whitespace-nowrap">To Follow</label>
+  </div>
+</div>
 
-      <label class="block font-medium mb-1">TIN:</label>
-      <input type="file" name="tin" id="tin" required class="mb-2 block w-full text-sm text-gray-700" accept=".pdf">
+<!-- SSS Number -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_sss_number">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="sss_number">SSS Number:</label>
+    <input type="file" name="sss_number" id="sss_number" required class="block w-full text-sm text-gray-700" accept=".pdf">
+  </div>
+</div>
 
-      <label class="block font-medium mb-1">Medical (Basic 5):</label>
-      <div class="mb-2">
-        <input type="file" name="medical_basic5" id="medical_basic5" required class="block w-full text-sm text-gray-700" accept=".pdf" />
-        <p class="text-xs text-gray-600 mt-1">
-          <strong>Notice:</strong> This document must have a Physician's Assessment: <em>Fit for Work/Unfit for Work</em>
-        </p>
-      </div>
+<!-- E1/E4 Form -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_e1_e4_form">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="e1_e4_form">E1 / E4 Form (ESI):</label>
+    <input type="file" name="e1_e4_form" id="e1_e4_form" required class="block w-full text-sm text-gray-700" accept=".pdf">
+  </div>
+</div>
+
+<!-- Philhealth ID -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_philhealth_id">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="philhealth_id">Philhealth ID / MDR:</label>
+    <input type="file" name="philhealth_id" id="philhealth_id" required class="block w-full text-sm text-gray-700" accept=".pdf">
+  </div>
+</div>
+
+<!-- Pag-ibig ID -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_pagibig_id">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="pagibig_id">Pag-ibig ID / MDF:</label>
+    <input type="file" name="pagibig_id" id="pagibig_id" required class="block w-full text-sm text-gray-700" accept=".pdf">
+  </div>
+</div>
+
+<!-- TIN -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_tin">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="tin">TIN:</label>
+    <input type="file" name="tin" id="tin" required class="block w-full text-sm text-gray-700" accept=".pdf">
+  </div>
+</div>
+
+<!-- Medical (Basic 5) -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_medical_basic5">
+  <div class="flex-1">
+    <label class="block font-medium mb-1" for="medical_basic5">Medical (Basic 5):</label>
+    <input type="file" name="medical_basic5" id="medical_basic5" required class="block w-full text-sm text-gray-700" accept=".pdf">
+    <p class="text-xs text-gray-600 mt-1">
+      <strong>Notice:</strong> This document must have a Physician's Assessment: <em>Fit for Work/Unfit for Work</em>
+    </p>
+  </div>
+</div>
 
       <button id="uploadBtn" type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-2 rounded shadow w-full">
         <span id="uploadBtnText">Upload Files</span>
@@ -315,22 +380,25 @@
 
   // 2. When email is entered, auto-select the name if found
   document.getElementById('email').addEventListener('blur', function() {
-    const email = this.value.trim();
-    if (!email) return;
-    fetch('/.netlify/functions/get-name-by-email?email=' + encodeURIComponent(email))
-      .then(res => res.json())
-      .then(data => {
-        if (data.name) {
-          const select = document.getElementById('fullname');
-          for (const option of select.options) {
-            if (option.value === data.name) {
-              select.value = data.name;
-              break;
-            }
-          }
-        }
-      });
-  });
+  const email = this.value.trim();
+  const nameInput = document.getElementById('fullname');
+  if (!email) {
+    nameInput.value = '';
+    // Show all field groups
+    document.querySelectorAll('.field-group').forEach(group => {
+      group.style.display = '';
+    });
+    return;
+  }
+  fetch('/.netlify/functions/get-name-by-email?email=' + encodeURIComponent(email))
+    .then(res => res.json())
+    .then(data => {
+      if (data.name) {
+        nameInput.value = data.name;
+        checkAndHideUploadedFields(data.name);
+      }
+    });
+});
 
   // When name is selected, auto-fetch and fill the email
   document.getElementById('fullname').addEventListener('change', function() {
@@ -346,14 +414,12 @@
   });
 
   function hideUploadedFields(uploadedFiles) {
-    // Normalize file names for comparison
     const normalized = uploadedFiles.map(f =>
       f.replace(/^[^-]+ - /, '') // Remove "Full Name - " prefix
        .replace(/\.[^/.]+$/, '') // Remove extension
        .toLowerCase()
        .replace(/[^a-z0-9]/g, '')
     );
-    // Map of your input IDs to expected file names (normalized)
     const fileMap = {
       resume: 'resume',
       birth_certificate: 'birthcertificate',
@@ -373,11 +439,12 @@
       medical_basic5: 'medical'
     };
     Object.entries(fileMap).forEach(([inputId, fileKey]) => {
-      const input = document.getElementById(inputId);
-      if (input) {
-        const parentDiv = input.closest('.mb-4') || input.closest('.mb-2') || input.parentElement;
-        if (parentDiv) {
-          parentDiv.style.display = normalized.includes(fileKey) ? 'none' : '';
+      const group = document.getElementById('group_' + inputId);
+      if (group) {
+        if (normalized.includes(fileKey)) {
+          group.style.display = 'none';
+        } else {
+          group.style.display = '';
         }
       }
     });
@@ -393,10 +460,7 @@
       });
   }
 
-  // After name is selected or email is autofilled, call:
-  document.getElementById('fullname').addEventListener('change', function() {
-    checkAndHideUploadedFields(this.value);
-  });
+  // After the full name is set (from email), call:
   document.getElementById('email').addEventListener('blur', function() {
     const name = document.getElementById('fullname').value;
     checkAndHideUploadedFields(name);
