@@ -219,11 +219,12 @@
 <!-- Medical (Basic 5) -->
 <div class="field-group mb-2 flex items-center justify-between" id="group_medical_basic5">
   <div class="flex-1">
-    <label class="block font-medium mb-1" for="medical_basic5">Medical (Basic 5):</label>
-    <input type="file" name="medical_basic5" id="medical_basic5" required class="block w-full text-sm text-gray-700" accept=".pdf">
-    <p class="text-xs text-gray-600 mt-1">
+    <label class="block font-medium" for="medical_basic5">Medical (Basic 5):</label>
+     <p class="text-xs text-red-600 mb-2">
       <strong>Notice:</strong> This document must have a Physician's Assessment: <em>Fit for Work/Unfit for Work</em>
     </p>
+    <input type="file" name="medical_basic5" id="medical_basic5" required class="block w-full text-sm text-gray-700" accept=".pdf">
+   
   </div>
 </div>
 
@@ -242,6 +243,15 @@
       <button id="closeModalBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold">Close</button>
     </div>
   </div>
+
+  <!-- Invalid Files Modal -->
+  <div id="invalidFilesModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
+  <div class="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full text-center">
+    <h3 class="text-xl font-bold mb-4 text-red-600">Invalid File Names</h3>
+    <p id="invalidFilesMsg" class="mb-6 text-gray-700"></p>
+    <button id="closeInvalidFilesBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold">Close</button>
+  </div>
+</div>
   
   <script>
   const uploadForm = document.getElementById('uploadForm');
@@ -249,8 +259,52 @@
   const uploadBtnText = document.getElementById('uploadBtnText');
   const successModal = document.getElementById('successModal');
   const closeModalBtn = document.getElementById('closeModalBtn');
-
+  const invalidFilesModal = document.getElementById('invalidFilesModal');
+  const closeInvalidFilesBtn = document.getElementById('closeInvalidFilesBtn');
+  const allowedFileNames = [
+  "Resume.pdf",
+  "Birth Certificate.pdf",
+  "Marriage Contract.pdf",
+  "Children-BC.pdf",
+  "TOR-Diploma.pdf",
+  "BIR2316.pdf",
+  "COE.pdf",
+  "Barangay.pdf",
+  "Police.pdf",
+  "NBI.pdf",
+  "SSS.pdf",
+  "E1E4.pdf",
+  "Philhealth.pdf",
+  "Pagibig.pdf",
+  "TIN.pdf",
+  "Medical.pdf"
+  ];
   uploadForm.addEventListener('submit', async function(e) {
+    // File name validation
+    let invalidFiles = [];
+    document.querySelectorAll('.field-group input[type="file"]:not([disabled])').forEach(input => {
+      if (input.files.length > 0) {
+        const fileName = input.files[0].name;
+        if (!allowedFileNames.includes(fileName)) {
+          invalidFiles.push(fileName);
+        }
+      }
+    });
+    if (invalidFiles.length > 0) {
+      const modal = document.getElementById('invalidFilesModal');
+      const msg = document.getElementById('invalidFilesMsg');
+      msg.innerHTML = `
+        <div class="mb-2">The following files do not follow the naming guide:</div>
+        <ul class="mb-2 text-left list-disc pl-5">${invalidFiles.map(f => `<li>${f}</li>`).join('')}</ul>
+        <div class="mt-2">Please rename your files exactly as shown in the <span class="font-semibold text-blue-600">File Naming Guide</span>.</div>
+      `;
+      modal.classList.remove('hidden');
+      e.preventDefault();
+      uploadBtn.disabled = false;
+      uploadBtnText.textContent = "Upload Files";
+      return;
+    }
+
     e.preventDefault();
     uploadBtn.disabled = true;
     uploadBtnText.textContent = "Uploading...";
@@ -276,6 +330,10 @@
 
   closeModalBtn.addEventListener('click', function() {
     successModal.classList.add('hidden');
+  });
+
+  closeInvalidFilesBtn.addEventListener('click', function() {
+    document.getElementById('invalidFilesModal').classList.add('hidden');
   });
 
   // Toggle the rename card
@@ -425,7 +483,7 @@
       birth_certificate: 'birthcertificate',
       marriage_contract: 'marriagecontract',
       children_birth_certificates: 'childrenbc',
-      transcript_diploma: 'tordiploma',
+      transcript_diploma: 'tor', // <-- FIXED HERE
       bir_2316: 'bir2316',
       coe_clearance: 'coe',
       barangay_clearance: 'barangay',
