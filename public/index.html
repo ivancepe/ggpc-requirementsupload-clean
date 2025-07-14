@@ -440,11 +440,14 @@
     };
     Object.entries(fileMap).forEach(([inputId, fileKey]) => {
       const group = document.getElementById('group_' + inputId);
-      if (group) {
+      const input = document.getElementById(inputId);
+      if (group && input) {
         if (normalized.includes(fileKey)) {
           group.style.display = 'none';
+          input.required = false; // Remove required when hidden
         } else {
           group.style.display = '';
+          input.required = true; // Restore required when shown
         }
       }
     });
