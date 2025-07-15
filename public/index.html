@@ -237,7 +237,7 @@
 
   <!-- Success Modal -->
   <div id="successModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
-    <div class="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full text-center">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-xl w-full text-center">
       <h3 class="text-xl font-bold mb-4 text-green-600">Upload Successful!</h3>
       <p class="mb-6">Your files have been uploaded successfully.</p>
       <button id="closeModalBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold">Close</button>
@@ -246,7 +246,7 @@
 
   <!-- Invalid Files Modal -->
   <div id="invalidFilesModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 hidden">
-  <div class="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full text-center">
+  <div class="bg-white rounded-lg shadow-lg p-8 max-w-xl w-full text-center">
     <h3 class="text-xl font-bold mb-4 text-red-600">Invalid File Names</h3>
     <p id="invalidFilesMsg" class="mb-6 text-gray-700"></p>
     <button id="closeInvalidFilesBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold">Close</button>
@@ -279,14 +279,33 @@
   "TIN.pdf",
   "Medical.pdf"
   ];
+  const fieldToFileName = {
+  resume: "Resume.pdf",
+  birth_certificate: "Birth Certificate.pdf",
+  marriage_contract: "Marriage Contract.pdf",
+  children_birth_certificates: "Children-BC.pdf",
+  transcript_diploma: "TOR-Diploma.pdf",
+  bir_2316: "BIR2316.pdf",
+  coe_clearance: "COE.pdf",
+  barangay_clearance: "Barangay.pdf",
+  police_clearance: "Police.pdf",
+  nbi_clearance: "NBI.pdf",
+  sss_number: "SSS.pdf",
+  e1_e4_form: "E1E4.pdf",
+  philhealth_id: "Philhealth.pdf",
+  pagibig_id: "Pagibig.pdf",
+  tin: "TIN.pdf",
+  medical_basic5: "Medical.pdf"
+};
   uploadForm.addEventListener('submit', async function(e) {
     // File name validation
     let invalidFiles = [];
     document.querySelectorAll('.field-group input[type="file"]:not([disabled])').forEach(input => {
       if (input.files.length > 0) {
         const fileName = input.files[0].name;
-        if (!allowedFileNames.includes(fileName)) {
-          invalidFiles.push(fileName);
+        const expectedName = fieldToFileName[input.id];
+        if (fileName !== expectedName) {
+          invalidFiles.push(`${fileName} (uploaded in "${input.id.replace(/_/g, ' ')}" field, expected "${expectedName}")`);
         }
       }
     });
@@ -294,9 +313,9 @@
       const modal = document.getElementById('invalidFilesModal');
       const msg = document.getElementById('invalidFilesMsg');
       msg.innerHTML = `
-        <div class="mb-2">The following files do not follow the naming guide:</div>
+        <div class="mb-2">The following files are uploaded in the wrong field or have incorrect names:</div>
         <ul class="mb-2 text-left list-disc pl-5">${invalidFiles.map(f => `<li>${f}</li>`).join('')}</ul>
-        <div class="mt-2">Please rename your files exactly as shown in the <span class="font-semibold text-blue-600">File Naming Guide</span>.</div>
+        <div class="mt-2">Please upload each file in its correct field and use the exact name from the <span class="font-semibold text-blue-600">File Naming Guide</span>.</div>
       `;
       modal.classList.remove('hidden');
       e.preventDefault();
