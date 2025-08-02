@@ -91,7 +91,7 @@ exports.handler = async (event) => {
             case 'barangay_clearance': docLabel = 'Barangay.pdf'; break;
             case 'police_clearance': docLabel = 'Police.pdf'; break;
             case 'nbi_clearance': docLabel = 'NBI.pdf'; break;
-            case 'sss_e1': docLabel = 'SSS.pdf'; break; // <-- ONLY THIS FOR SSS/E1
+            case 'sss': docLabel = 'SSS.pdf'; break; // <-- ONLY THIS FOR SSS/E1
             case 'philhealth_id': docLabel = 'Philhealth.pdf'; break;
             case 'pagibig_id': docLabel = 'Pagibig.pdf'; break;
             case 'tin': docLabel = 'TIN.pdf'; break;
