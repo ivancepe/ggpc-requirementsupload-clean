@@ -47,7 +47,6 @@
           <li>Police.pdf</li>
           <li>NBI.pdf</li>
           <li>SSS.pdf</li>
-          <li>E1E4.pdf</li>
           <li>Philhealth.pdf</li>
           <li>Pagibig.pdf</li>
           <li>TIN.pdf</li>
@@ -176,19 +175,11 @@
   </div>
 </div>
 
-<!-- SSS Number -->
-<div class="field-group mb-2 flex items-center justify-between" id="group_sss_number">
+<!-- SSS (E1) -->
+<div class="field-group mb-2 flex items-center justify-between" id="group_sss_e1">
   <div class="flex-1">
-    <label class="block font-medium mb-1" for="sss_number">SSS Number:</label>
-    <input type="file" name="sss_number" id="sss_number" required class="block w-full text-sm text-gray-700" accept=".pdf">
-  </div>
-</div>
-
-<!-- E1/E4 Form -->
-<div class="field-group mb-2 flex items-center justify-between" id="group_e1_e4_form">
-  <div class="flex-1">
-    <label class="block font-medium mb-1" for="e1_e4_form">E1 / E4 Form (ESI):</label>
-    <input type="file" name="e1_e4_form" id="e1_e4_form" required class="block w-full text-sm text-gray-700" accept=".pdf">
+    <label class="block font-medium mb-1" for="sss_e1">SSS (E1):</label>
+    <input type="file" name="sss_e1" id="sss_e1" required class="block w-full text-sm text-gray-700" accept=".pdf">
   </div>
 </div>
 
@@ -560,33 +551,33 @@ document.querySelectorAll('.field-group').forEach(group => {
 });
 
 // When email is entered and matches a record, show all fields
-document.getElementById('email').addEventListener('blur', function() {
-  const email = this.value.trim();
-  const nameInput = document.getElementById('fullname');
-  if (!email) {
-    nameInput.value = '';
-    document.querySelectorAll('.field-group').forEach(group => {
-      group.style.display = 'none';
-    });
-    return;
-  }
-  fetch('/.netlify/functions/get-name-by-email?email=' + encodeURIComponent(email))
-    .then(res => res.json())
-    .then(data => {
-      if (data.name) {
-        nameInput.value = data.name;
-        document.querySelectorAll('.field-group').forEach(group => {
-          group.style.display = '';
-        });
-        checkAndHideUploadedFields(data.name);
-      } else {
-        nameInput.value = '';
-        document.querySelectorAll('.field-group').forEach(group => {
-          group.style.display = 'none';
-        });
-      }
-    });
-});
+// document.getElementById('email').addEventListener('blur', function() {
+//   const email = this.value.trim();
+//   const nameInput = document.getElementById('fullname');
+//   if (!email) {
+//     nameInput.value = '';
+//     document.querySelectorAll('.field-group').forEach(group => {
+//       group.style.display = 'none';
+//     });
+//     return;
+//   }
+//   fetch('/.netlify/functions/get-name-by-email?email=' + encodeURIComponent(email))
+//     .then(res => res.json())
+//     .then(data => {
+//       if (data.name) {
+//         nameInput.value = data.name;
+//         document.querySelectorAll('.field-group').forEach(group => {
+//           group.style.display = '';
+//         });
+//         checkAndHideUploadedFields(data.name);
+//       } else {
+//         nameInput.value = '';
+//         document.querySelectorAll('.field-group').forEach(group => {
+//           group.style.display = 'none';
+//         });
+//       }
+//     });
+// });
     </script>
   </body>
 </html>

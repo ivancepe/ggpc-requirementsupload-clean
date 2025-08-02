@@ -49,7 +49,7 @@ exports.handler = async (event) => {
         new Promise((res, rej) => {
           writeStream.on('finish', () => {
             if (fileSize > 0) {
-              res({ filepath, filename: safeFilename, mimetype });
+              res({ filepath, filename: safeFilename, mimetype, fieldname });
             } else {
               fs.unlink(filepath, () => {});
               res(null);
@@ -91,8 +91,7 @@ exports.handler = async (event) => {
             case 'barangay_clearance': docLabel = 'Barangay.pdf'; break;
             case 'police_clearance': docLabel = 'Police.pdf'; break;
             case 'nbi_clearance': docLabel = 'NBI.pdf'; break;
-            case 'sss_number': docLabel = 'SSS.pdf'; break;
-            case 'e1_e4_form': docLabel = 'E1E4.pdf'; break;
+            case 'sss_e1': docLabel = 'SSS.pdf'; break; // <-- ONLY THIS FOR SSS/E1
             case 'philhealth_id': docLabel = 'Philhealth.pdf'; break;
             case 'pagibig_id': docLabel = 'Pagibig.pdf'; break;
             case 'tin': docLabel = 'TIN.pdf'; break;
@@ -132,8 +131,8 @@ exports.handler = async (event) => {
 
         const REQUIRED_FILES = [
           'Resume', 'Birth Certificate', 'Marriage Contract', 'Children-BC', 'TOR-Diploma',
-          'BIR2316', 'COE', 'Barangay', 'Police', 'NBI', 'SSS', 'E1E4', 'Philhealth', 'Pag-ibig', 'TIN',
-          'Medical',
+          'BIR2316', 'COE', 'Barangay', 'Police', 'NBI', 'SSS', // <-- ONLY THIS FOR SSS/E1
+          'Philhealth', 'Pag-ibig', 'TIN', 'Medical',
         ];
 
         const uploadedNames = uploadResults
@@ -155,11 +154,6 @@ exports.handler = async (event) => {
             toFollowList.push(req);
           }
         });
-
-        // // Example for summary
-        // if (fields.medical_basic5) {
-        //   uploadedList.push('Medical (Basic 5)');
-        // }
 
         const childrenNone = fields.children_none === 'none';
         const notMarried = fields.marital_status === 'not_married';
@@ -224,7 +218,7 @@ ${specialNotes ? `<strong>Special Notes:</strong><ul>${specialNotes}</ul>` : ''}
 
         await transporter.sendMail({
           from: `"GGPC Recruitment System" <${process.env.EMAIL_USER}>`,
-          to: 'recruitment.ggpc@gmail.com', //recruitment.ggpc@gmail.com
+          to: 'recruitment.ggpc@gmail.com',
           subject: `New Requirements Submission: ${fields.fullname}`,
           html: hrEmailBody,
         });
@@ -264,7 +258,7 @@ async function getKintoneRecordIdByName(applicantName) {
   const resp = await axios.get(url, {
     params: {
       app: KINTONE_APP_ID,
-      query: `Full_Name like "${applicantName.trim()}"`, // use like instead of =
+      query: `Full_Name like "${applicantName.trim()}"`,
       fields: '$id,Full_Name',
     },
     headers,
@@ -297,7 +291,7 @@ async function getOrCreateSubfolder(drive, parentFolderId, folderName) {
     requestBody: {
       name: folderName,
       mimeType: 'application/vnd.google-apps.folder',
-      parents: [parentFolderId], // This is the ID from the Shared Drive
+      parents: [parentFolderId],
     },
     fields: 'id',
     supportsAllDrives: true,

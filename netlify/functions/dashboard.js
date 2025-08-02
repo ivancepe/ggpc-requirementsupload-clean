@@ -11,8 +11,7 @@ const REQUIRED_FILES = [
   'Barangay',
   'Police',
   'NBI',
-  'SSS',
-  'E1E4',
+  'SSS', // <-- COMBINED FIELD
   'Philhealth',
   'Pag-ibig',
   'TIN',
