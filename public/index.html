@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GKG | Requirements Upload Page</title>
+  <link rel="shortcut icon" href="./images/gkg.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom styles for file input button */
+    input[type="file"]::file-selector-button {
+      @apply bg-slate-50 text-slate-700 font-semibold border border-slate-300 rounded-md px-3 py-2 text-sm mr-4 hover:bg-slate-100 cursor-pointer transition-colors;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800">
+
+  <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+
+    <header class="text-center mb-8">
+      <img src="/images/ggpc-logo.png" alt="Company Logo" class="h-20 w-auto mx-auto mb-4">
+      <h1 class="text-3xl font-bold text-slate-900">GGPC Requirements Upload</h1>
+      <p class="text-slate-500 mt-1">Please follow the instructions carefully to submit your documents.</p>
+    </header>
+
+    <main class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-slate-200">
+
+      <section class="mb-8 p-6 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg">
+        <h2 class="text-xl font-bold mb-4 text-slate-900 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Important Instructions
+        </h2>
+        <ul class="list-disc pl-5 space-y-2 text-slate-700">
+          <li>All documents must be uploaded in <strong>PDF format only</strong>.</li>
+          <li>Ensure each document is uploaded to its corresponding field.</li>
+          <li>For multiple children, combine all their birth certificates into a <strong>single PDF file</strong>.</li>
+          <li>Submit at least <strong>two (2)</strong> of the following: Barangay, Police, or NBI Clearance.</li>
+          <li>Rename your files <strong>exactly</strong> as shown in the File Naming Guide before uploading.</li>
+        </ul>
+
+        <div class="mt-6">
+          <button type="button" id="toggleRenameCard" class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-transform transform hover:scale-105">
+            Show File Naming Guide
+          </button>
+          <div id="renameCard" class="bg-slate-50 border border-slate-300 rounded-lg p-4 mt-4 shadow-inner hidden">
+            <h3 class="text-lg font-bold mb-2 text-slate-800">File Naming Guide</h3>
+            <p class="mb-3 text-slate-600">Use these exact file names for your documents:</p>
+            <ul class="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-2 text-slate-700 list-disc pl-5">
+              <li>Resume.pdf</li>
+              <li>Birth Certificate.pdf</li>
+              <li>Marriage Contract.pdf</li>
+              <li>Children-BC.pdf</li>
+              <li>TOR-Diploma.pdf</li>
+              <li>BIR2316.pdf</li>
+              <li>COE.pdf</li>
+              <li>Barangay.pdf</li>
+              <li>Police.pdf</li>
+              <li>NBI.pdf</li>
+              <li>SSS.pdf</li>
+              <li>Philhealth.pdf</li>
+              <li>Pagibig.pdf</li>
+              <li>TIN.pdf</li>
+              <li>Medical.pdf</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <form id="uploadForm" enctype="multipart/form-data" class="space-y-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 border border-slate-200 rounded-lg">
+          <div>
+            <label class="block font-semibold mb-1 text-slate-700" for="email">Your Email Address</label>
+            <input type="email" name="email" id="email" placeholder="e.g., juan.delacruz@example.com" required class="px-4 py-2 border border-slate-300 rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1 text-slate-700" for="fullname">Full Name</label>
+            <input type="text" name="fullname" id="fullname" required class="block w-full px-4 py-2 text-slate-700 bg-slate-200 border border-slate-300 rounded-lg" readonly>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200" id="group_resume">
+            <label class="block font-semibold mb-1 text-slate-700" for="resume">Resume</label>
+            <input type="file" name="resume" id="resume" required class="block w-full text-sm text-slate-500" accept=".pdf">
+          </div>
+
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200" id="group_birth_certificate">
+            <label class="block font-semibold mb-1 text-slate-700" for="birth_certificate">NSO / PSA Birth Certificate</label>
+            <input type="file" name="birth_certificate" id="birth_certificate" required class="block w-full text-sm text-slate-500" accept=".pdf">
+          </div>
+
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200" id="group_marriage_contract">
+            <label class="block font-semibold mb-2 text-slate-700" for="marriage_contract">Marriage Contract</label>
+            <input type="file" name="marriage_contract" id="marriage_contract" class="block w-full text-sm text-slate-500 mb-2" accept=".pdf">
+            <div class="flex items-center mt-2">
+              <input type="checkbox" name="marital_status" id="not_married" value="not_married" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+              <label for="not_married" class="ml-2 block text-sm text-gray-900">Not Married</label>
+            </div>
+          </div>
+          
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200" id="group_children_birth_certificates">
+            <label class="block font-semibold mb-2 text-slate-700" for="children_birth_certificates">Children Birth Certificates</label>
+            <input type="file" name="children_birth_certificates" id="children_birth_certificates" class="block w-full text-sm text-slate-500 mb-2" accept=".pdf">
+            <div class="flex items-center mt-2">
+              <input type="checkbox" name="children_none" id="children_none" value="none" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+              <label for="children_none" class="ml-2 block text-sm text-gray-900">No Children</label>
+            </div>
+          </div>
+
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200" id="group_transcript_diploma">
+            <label class="block font-semibold mb-2 text-slate-700" for="transcript_diploma">Transcript of Record / Diploma</label>
+            <input type="file" name="transcript_diploma" id="transcript_diploma" class="block w-full text-sm text-slate-500 mb-2" accept=".pdf">
+            <div class="flex items-center mt-2">
+                <input type="checkbox" name="transcript_to_follow" id="transcript_to_follow" value="to_follow" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                <label for="transcript_to_follow" class="ml-2 block text-sm text-gray-900">To Follow</label>
+            </div>
+          </div>
+          
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200" id="group_bir_2316">
+            <label class="block font-semibold mb-2 text-slate-700" for="bir_2316">BIR Form 2316</label>
+            <input type="file" name="bir_2316" id="bir_2316" class="block w-full text-sm text-slate-500 mb-2" accept=".pdf">
+            <div class="flex items-center mt-2">
+              <input type="checkbox" name="bir_to_follow" id="bir_to_follow" value="to_follow" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+              <label for="bir_to_follow" class="ml-2 block text-sm text-gray-900">To Follow</label>
+            </div>
+          </div>
+
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200" id="group_coe_clearance">
+            <label class="block font-semibold mb-2 text-slate-700" for="coe_clearance">Certificate of Employment</label>
+            <input type="file" name="coe_clearance" id="coe_clearance" class="block w-full text-sm text-slate-500 mb-2" accept=".pdf">
+            <div class="flex items-center mt-2">
+              <input type="checkbox" name="coe_to_follow" id="coe_to_follow" value="to_follow" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+              <label for="coe_to_follow" class="ml-2 block text-sm text-gray-900">To Follow</label>
+            </div>
+          </div>
+
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200" id="group_barangay_clearance">
+            <label class="block font-semibold mb-2 text-slate-700" for="barangay_clearance">Barangay Clearance</label>
+            <input type="file" name="barangay_clearance" id="barangay_clearance" class="block w-full text-sm text-slate-500 mb-2" accept=".pdf">
+            <div class="flex items-center mt-2">
+              <input type="checkbox" name="barangay_to_follow" id="barangay_to_follow" value="to_follow" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+              <label for="barangay_to_follow" class="ml-2 block text-sm text-gray-900">To Follow</label>
+            </div>
+          </div>
+
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200" id="group_police_clearance">
+            <label class="block font-semibold mb-2 text-slate-700" for="police_clearance">Police Clearance</label>
+            <input type="file" name="police_clearance" id="police_clearance" class="block w-full text-sm text-slate-500 mb-2" accept=".pdf">
+            <div class="flex items-center mt-2">
+              <input type="checkbox" name="police_to_follow" id="police_to_follow" value="to_follow" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+              <label for="police_to_follow" class="ml-2 block text-sm text-gray-900">To Follow</label>
+            </div>
+          </div>
+
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200" id="group_nbi_clearance">
+            <label class="block font-semibold mb-2 text-slate-700" for="nbi_clearance">NBI Clearance</label>
+            <input type="file" name="nbi_clearance" id="nbi_clearance" class="block w-full text-sm text-slate-500 mb-2" accept=".pdf">
+            <div class="flex items-center mt-2">
+              <input type="checkbox" name="nbi_to_follow" id="nbi_to_follow" value="to_follow" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+              <label for="nbi_to_follow" class="ml-2 block text-sm text-gray-900">To Follow</label>
+            </div>
+          </div>
+          
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200" id="group_sss">
+            <label class="block font-semibold mb-1 text-slate-700" for="sss">SSS (E1 Form)</label>
+            <input type="file" name="sss" id="sss" required class="block w-full text-sm text-slate-500" accept=".pdf">
+          </div>
+
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200" id="group_philhealth_id">
+            <label class="block font-semibold mb-1 text-slate-700" for="philhealth_id">Philhealth ID / MDR</label>
+            <input type="file" name="philhealth_id" id="philhealth_id" required class="block w-full text-sm text-slate-500" accept=".pdf">
+          </div>
+
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200" id="group_pagibig_id">
+            <label class="block font-semibold mb-1 text-slate-700" for="pagibig_id">Pag-ibig ID / MDF</label>
+            <input type="file" name="pagibig_id" id="pagibig_id" required class="block w-full text-sm text-slate-500" accept=".pdf">
+          </div>
+
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200" id="group_tin">
+            <label class="block font-semibold mb-1 text-slate-700" for="tin">TIN</label>
+            <input type="file" name="tin" id="tin" required class="block w-full text-sm text-slate-500" accept=".pdf">
+          </div>
+          
+          <div class="field-group bg-white p-4 rounded-lg border border-slate-200 md:col-span-2" id="group_medical_basic5">
+            <label class="block font-semibold text-slate-700" for="medical_basic5">Pre-Employment Medical Exam</label>
+             <p class="text-xs text-red-600 mt-1 mb-2">
+              <strong>Notice:</strong> This document must include a Physician's Assessment: <em>"Fit for Work" or "Unfit for Work"</em>.
+            </p>
+            <input type="file" name="medical_basic5" id="medical_basic5" required class="block w-full text-sm text-slate-500" accept=".pdf">
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-slate-200">
+          <button id="uploadBtn" type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg px-8 py-3 rounded-lg shadow-md w-full transition-all duration-300 transform hover:scale-105 disabled:bg-slate-400 disabled:cursor-not-allowed flex items-center justify-center">
+            <span id="uploadBtnText">Upload Files</span>
+            <svg id="uploadSpinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <div id="successModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 hidden p-4">
+    <div class="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full text-center transform transition-all scale-95 opacity-0" style="transition: all 0.3s ease-out;">
+      <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
+        <svg class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <h3 class="text-2xl font-bold mb-2 text-slate-900">Upload Successful!</h3>
+      <p class="mb-6 text-slate-500">Your files have been submitted. Thank you!</p>
+      <button id="closeModalBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded-lg font-semibold transition-transform transform hover:scale-105">Close</button>
+    </div>
+  </div>
+
+  <div id="invalidFilesModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 hidden p-4">
+    <div class="bg-white rounded-xl shadow-2xl p-8 max-w-lg w-full text-center transform transition-all scale-95 opacity-0" style="transition: all 0.3s ease-out;">
+      <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-4">
+        <svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+      </div>
+      <h3 class="text-2xl font-bold mb-2 text-slate-900">Invalid File Names</h3>
+      <div id="invalidFilesMsg" class="mb-6 text-slate-600 text-left"></div>
+      <button id="closeInvalidFilesBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded-lg font-semibold transition-transform transform hover:scale-105">Close</button>
+    </div>
+  </div>
+  
+  <script>
+  
+
+  const uploadForm = document.getElementById('uploadForm');
+  const uploadBtn = document.getElementById('uploadBtn');
+  const uploadBtnText = document.getElementById('uploadBtnText');
+  const spinner = document.getElementById('uploadSpinner');
+  const successModal = document.getElementById('successModal');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const invalidFilesModal = document.getElementById('invalidFilesModal');
+  const closeInvalidFilesBtn = document.getElementById('closeInvalidFilesBtn');
+
+  const allowedFileNames = [
+  "Resume.pdf",
+  "Birth Certificate.pdf",
+  "Marriage Contract.pdf",
+  "Children-BC.pdf",
+  "TOR-Diploma.pdf",
+  "BIR2316.pdf",
+  "COE.pdf",
+  "Barangay.pdf",
+  "Police.pdf",
+  "NBI.pdf",
+  "SSS.pdf",
+  "Philhealth.pdf",
+  "Pagibig.pdf",
+  "TIN.pdf",
+  "Medical.pdf"
+  ];
+  const fieldToFileName = {
+    resume: "Resume.pdf",
+    birth_certificate: "Birth Certificate.pdf",
+    marriage_contract: "Marriage Contract.pdf",
+    children_birth_certificates: "Children-BC.pdf",
+    transcript_diploma: "TOR-Diploma.pdf",
+    bir_2316: "BIR2316.pdf",
+    coe_clearance: "COE.pdf",
+    barangay_clearance: "Barangay.pdf",
+    police_clearance: "Police.pdf",
+    nbi_clearance: "NBI.pdf",
+    sss: "SSS.pdf",
+    philhealth_id: "Philhealth.pdf",
+    pagibig_id: "Pagibig.pdf",
+    tin: "TIN.pdf",
+    medical_basic5: "Medical.pdf"
+  };
+
+  function showModal(modal) {
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modal.querySelector('div').classList.remove('scale-95', 'opacity-0');
+    }, 10);
+  }
+
+  function hideModal(modal) {
+    modal.querySelector('div').classList.add('scale-95', 'opacity-0');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 300);
+  }
+  
+  uploadForm.addEventListener('submit', async function(e) {
+    e.preventDefault(); // Prevent default submission immediately
+
+    let invalidFiles = [];
+    document.querySelectorAll('.field-group input[type="file"]:not([disabled])').forEach(input => {
+      if (input.files.length > 0) {
+        const fileName = input.files[0].name;
+        const expectedName = fieldToFileName[input.id];
+        if (fileName !== expectedName) {
+          const label = document.querySelector(`label[for='${input.id}']`).textContent;
+          invalidFiles.push(`<li>File "<strong>${fileName}</strong>" was used for the "<em>${label}</em>" field. Expected "<strong>${expectedName}</strong>".</li>`);
+        }
+      }
+    });
+
+    if (invalidFiles.length > 0) {
+      const msg = document.getElementById('invalidFilesMsg');
+      msg.innerHTML = `
+        <p class="mb-4">The following files have incorrect names or were uploaded in the wrong field:</p>
+        <ul class="mb-4 text-sm space-y-2 list-disc pl-5">${invalidFiles.join('')}</ul>
+        <p class="font-semibold text-blue-600">Please rename your files and upload them in the correct fields as per the File Naming Guide.</p>
+      `;
+      showModal(invalidFilesModal);
+      return;
+    }
+
+    uploadBtn.disabled = true;
+    uploadBtnText.textContent = "Uploading...";
+    spinner.classList.remove('hidden');
+
+    const formData = new FormData(uploadForm);
+    try {
+      const response = await fetch('/.netlify/functions/upload', {
+        method: 'POST',
+        body: formData
+      });
+      if (response.ok) {
+        showModal(successModal);
+        uploadForm.reset();
+        // After reset, re-hide all fields
+        document.querySelectorAll('.field-group').forEach(group => {
+            group.style.display = 'none';
+        });
+      } else {
+        alert('Upload failed. Please try again.');
+      }
+    } catch (err) {
+      alert('An error occurred: ' + err);
+    } finally {
+      uploadBtn.disabled = false;
+      uploadBtnText.textContent = "Upload Files";
+      spinner.classList.add('hidden');
+    }
+  });
+
+  closeModalBtn.addEventListener('click', () => hideModal(successModal));
+  closeInvalidFilesBtn.addEventListener('click', () => hideModal(invalidFilesModal));
+
+  document.getElementById('toggleRenameCard').addEventListener('click', function() {
+    const card = document.getElementById('renameCard');
+    card.classList.toggle('hidden');
+    this.textContent = card.classList.contains('hidden') ? 'Show File Naming Guide' : 'Hide File Naming Guide';
+  });
+
+  function setupToFollowToggle(fileInputId, checkboxId) {
+    const fileInput = document.getElementById(fileInputId);
+    const checkbox = document.getElementById(checkboxId);
+    if (!fileInput || !checkbox) return;
+    checkbox.addEventListener('change', function() {
+      fileInput.disabled = this.checked;
+      if (this.checked) {
+        fileInput.value = ''; 
+        fileInput.required = false;
+      } else {
+        fileInput.required = true;
+      }
+    });
+    fileInput.addEventListener('change', function() {
+      if (this.value) {
+        checkbox.checked = false;
+        fileInput.disabled = false;
+        fileInput.required = true;
+      }
+    });
+  }
+
+  const toFollowPairs = [
+    ['transcript_diploma', 'transcript_to_follow'],
+    ['bir_2316', 'bir_to_follow'],
+    ['coe_clearance', 'coe_to_follow'],
+    ['barangay_clearance', 'barangay_to_follow'],
+    ['police_clearance', 'police_to_follow'],
+    ['nbi_clearance', 'nbi_to_follow']
+  ];
+  toFollowPairs.forEach(([fileId, checkId]) => setupToFollowToggle(fileId, checkId));
+
+  const marriageContractInput = document.getElementById('marriage_contract');
+  const notMarriedRadio = document.getElementById('not_married');
+  if (notMarriedRadio && marriageContractInput) {
+    notMarriedRadio.addEventListener('change', function() {
+      marriageContractInput.disabled = this.checked;
+      if (this.checked) marriageContractInput.value = '';
+    });
+    marriageContractInput.addEventListener('change', function() {
+      if (this.value) {
+        notMarriedRadio.checked = false;
+        marriageContractInput.disabled = false;
+      }
+    });
+  }
+
+  const childrenBirthInput = document.getElementById('children_birth_certificates');
+  const childrenNoneCheckbox = document.getElementById('children_none');
+  if (childrenNoneCheckbox && childrenBirthInput) {
+    childrenNoneCheckbox.addEventListener('change', function() {
+      childrenBirthInput.disabled = this.checked;
+      if (this.checked) childrenBirthInput.value = '';
+    });
+    childrenBirthInput.addEventListener('change', function() {
+      if (this.value) {
+        childrenNoneCheckbox.checked = false;
+        childrenBirthInput.disabled = false;
+      }
+    });
+  }
+  
+  // Removed dropdown logic for Full Name as it is now readonly.
+  // The logic is now purely driven by the email input.
+  document.getElementById('email').addEventListener('blur', function() {
+    const email = this.value.trim();
+    const nameInput = document.getElementById('fullname');
+    const allFields = document.querySelectorAll('.field-group');
+
+    // Function to set required status on inputs
+    const setRequiredStatus = (group, isRequired) => {
+        const fileInput = group.querySelector('input[type="file"]');
+        if (fileInput) {
+            // Only set required if it's not disabled by a checkbox
+            if (!fileInput.disabled) {
+                fileInput.required = isRequired;
+            }
+        }
+    };
+    
+    if (!email) {
+      nameInput.value = 'Enter your email to begin';
+      allFields.forEach(group => {
+        group.style.display = 'none';
+        setRequiredStatus(group, false);
+      });
+      return;
+    }
+    
+    fetch('/.netlify/functions/get-name-by-email?email=' + encodeURIComponent(email))
+      .then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        return res.json();
+      })
+      .then(data => {
+        if (data.name) {
+          nameInput.value = data.name;
+          checkAndHideUploadedFields(data.name); // This will show/hide fields
+        } else {
+          nameInput.value = 'No matching record found.';
+          allFields.forEach(group => {
+            group.style.display = 'none';
+            setRequiredStatus(group, false);
+          });
+        }
+      })
+      .catch(error => {
+          console.error("Error fetching name:", error);
+          nameInput.value = 'Error looking up email.';
+          allFields.forEach(group => {
+            group.style.display = 'none';
+            setRequiredStatus(group, false);
+          });
+      });
+  });
+
+  function checkAndHideUploadedFields(name) {
+    if (!name) return;
+    fetch('/.netlify/functions/get-uploaded-files?name=' + encodeURIComponent(name))
+      .then(res => res.json())
+      .then(uploadedFiles => {
+        hideUploadedFields(uploadedFiles);
+      });
+  }
+  
+  function hideUploadedFields(uploadedFiles) {
+    // Normalize file names from server for comparison
+    const normalizedUploaded = uploadedFiles.map(f =>
+      f.replace(/^[^-]+ - /, '').toLowerCase() // "Full Name - Resume.pdf" -> "resume.pdf"
+    );
+
+    const fileMap = {
+      resume: "resume.pdf",
+      birth_certificate: "birth certificate.pdf",
+      marriage_contract: "marriage contract.pdf",
+      children_birth_certificates: "children-bc.pdf",
+      transcript_diploma: "tor-diploma.pdf",
+      bir_2316: "bir2316.pdf",
+      coe_clearance: "coe.pdf",
+      barangay_clearance: "barangay.pdf",
+      police_clearance: "police.pdf",
+      nbi_clearance: "nbi.pdf",
+      sss: "sss.pdf",
+      philhealth_id: "philhealth.pdf",
+      pagibig_id: "pagibig.pdf",
+      tin: "tin.pdf",
+      medical_basic5: "medical.pdf"
+    };
+
+    Object.entries(fileMap).forEach(([inputId, fileName]) => {
+      const group = document.getElementById('group_' + inputId);
+      const input = document.getElementById(inputId);
+      
+      if (group && input) {
+        // Find if a file matching this input's expected name has been uploaded
+        const isUploaded = normalizedUploaded.includes(fileName);
+        
+        if (isUploaded) {
+          group.style.display = 'none';
+          input.required = false; // Not required if already uploaded
+        } else {
+          // Use flex for better alignment than block
+          group.style.display = ''; 
+          
+          // Re-apply required status only if not disabled by a checkbox
+          // This check covers 'To Follow', 'Not Married', etc.
+          if (!input.disabled) {
+            // Check if the element originally had the `required` attribute.
+            // SSS, Philhealth etc. are always required. Others are not.
+             const isInitiallyRequired = ['resume', 'birth_certificate', 'sss', 'philhealth_id', 'pagibig_id', 'tin', 'medical_basic5'].includes(inputId);
+            if (isInitiallyRequired) {
+                input.required = true;
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Initially, hide all file input fields on page load.
+  document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.field-group').forEach(group => {
+        group.style.display = 'none';
+      });
+      document.getElementById('fullname').value = 'Enter your email to begin';
+  });
+
+    </script>
+  </body>
+</html>
